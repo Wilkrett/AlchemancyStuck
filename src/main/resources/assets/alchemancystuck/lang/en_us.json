@@ -26,7 +26,7 @@
   "property.alchemancystuck.rage_inducing": "Rage Inducing",
 
   "infusion_codex.alchemancystuck:rage_inducing.flavor": "honk. :o)",
-  "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage: you black out and let instinct take over, dealing 20% more damage, taking 20% less damage, and moving 80% faster, while growing famished 50% faster.",
+  "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage. Dealing 20% more damage, taking 20% less damage, moving 80% faster, while draining hunger 50% faster.",
   "infusion_codex.alchemancystuck:rage_inducing.when_hit_worn": "5% chance to trigger the same Rage.",
 
   "message.alchemancystuck.rage_inducing.activate1": "Something inside you snaps.",

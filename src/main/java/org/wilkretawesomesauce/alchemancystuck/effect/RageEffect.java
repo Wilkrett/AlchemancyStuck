@@ -19,11 +19,11 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.wilkretawesomesauce.alchemancystuck.Alchemancystuck;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageCloneEntity;
-import org.wilkretawesomesauce.alchemancystuck.registry.AddonEntities;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonMobEffects;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -86,7 +86,12 @@ public class RageEffect extends MobEffect {
     public void onEffectAdded(LivingEntity entity, int amplifier) {
         super.onEffectAdded(entity, amplifier);
 
-        if (entity instanceof ServerPlayer owner && entity.level() instanceof ServerLevel level && !isRaging(owner))
+        // RageCloneEntity is itself a ServerPlayer now (see its own doc comment for why) - without this
+        // exclusion, startRage's own `clone.addEffect(RAGE)` call (granting the clone the attack
+        // damage/armor modifiers) would re-enter this exact method, see "a ServerPlayer just got Rage",
+        // and spawn a second clone possessing the first, which grants *that* clone an effect too, and
+        // so on forever - a runaway chain of clones each broadcasting their own "joined the game".
+        if (entity instanceof ServerPlayer owner && !(entity instanceof RageCloneEntity) && entity.level() instanceof ServerLevel level && !isRaging(owner))
             startRage(owner, level);
     }
 
@@ -112,10 +117,8 @@ public class RageEffect extends MobEffect {
     }
 
     private static void startRage(ServerPlayer owner, ServerLevel level) {
-        RageCloneEntity clone = new RageCloneEntity(AddonEntities.RAGE_CLONE.get(), level);
-        clone.possess(owner);
+        RageCloneEntity clone = RageCloneEntity.spawn(owner);
         clone.addEffect(new MobEffectInstance(AddonMobEffects.RAGE, DURATION_TICKS, 0, false, false));
-        level.addFreshEntity(clone);
 
         owner.getPersistentData().putInt(TAG_PRIOR_GAMEMODE, owner.gameMode.getGameModeForPlayer().getId());
         ACTIVE_RAGES.put(owner.getUUID(), clone.getUUID());
@@ -163,16 +166,22 @@ public class RageEffect extends MobEffect {
         UUID cloneUUID = ACTIVE_RAGES.remove(owner.getUUID());
         restoreGameMode(owner);
 
+        // Searches every dimension, not just the owner's own level - the clone can wander through a
+        // portal mid-rage (its AI doesn't avoid them), and the owner's own level never changes (they
+        // never physically move, only their camera does), so looking it up in just owner.level() would
+        // silently fail to find it whenever that happens.
         RageCloneEntity clone = null;
-        if (cloneUUID != null && owner.level() instanceof ServerLevel level && level.getEntity(cloneUUID) instanceof RageCloneEntity found)
-            clone = found;
+        if (cloneUUID != null && owner.getServer() != null)
+            for (ServerLevel candidate : owner.getServer().getAllLevels())
+                if (candidate.getEntity(cloneUUID) instanceof RageCloneEntity found) {
+                    clone = found;
+                    break;
+                }
 
-        if (clone != null) {
-            owner.teleportTo(clone.getX(), clone.getY(), clone.getZ());
-            owner.setYRot(clone.getYRot());
-            owner.setXRot(clone.getXRot());
+        if (clone != null && clone.level() instanceof ServerLevel cloneLevel) {
+            owner.teleportTo(cloneLevel, clone.getX(), clone.getY(), clone.getZ(), Set.of(), clone.getYRot(), clone.getXRot());
             owner.setHealth(overwhelmed ? 1.0F : (float) Math.min(clone.getHealth(), owner.getMaxHealth()));
-            clone.discard();
+            clone.despawn();
         } else if (overwhelmed) {
             owner.setHealth(1.0F);
         }
@@ -209,21 +218,18 @@ public class RageEffect extends MobEffect {
     }
 
     /**
-     * A rare race: the same hit that rolls the rare trigger chance can also be lethal, so the real
-     * player's own (now-idle spectator) body can end up processing its own death from that hit right
-     * alongside {@code onDamageReceived} starting the rage - the clone spawns and takes over fine, but
-     * the actual player entity dies independently a moment later, leaving a live, fighting clone with
-     * no owner to eventually restore (the "spectator dies, body lives on" bug, only fixable by
-     * relogging into the login safety net). Since a rage already means "the clone absorbs the risk,
-     * not you," a raging player's real body shouldn't be able to die from anything at all while it's
-     * just standing there being watched from - same {@link LivingDeathEvent} hook a totem of undying
-     * uses, same 1 HP "shaken, not killed" convention {@link #endRage} already uses elsewhere.
+     * The owner's real body can still die while raging (falling, drowning, a second attacker while
+     * their idle spectator body just stands there, etc.) - a rage doesn't make the real player
+     * immortal, only the clone absorbs actual combat risk. What it does need to do is clean up the
+     * dangling rage state, since nothing else will: without this, the clone would keep fighting
+     * indefinitely with no owner left to eventually restore into, and {@link #ACTIVE_RAGES} would keep
+     * a stale entry forever. Reuses {@link #cleanupRage} - the same camera/gamemode-restoring,
+     * clone-despawning cleanup {@link #onEffectExpired}/{@link #onEffectRemoved} already use - rather
+     * than canceling the death event or forcing survival, which is what this used to do.
      */
     public static void onPlayerDeath(LivingDeathEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player && isRaging(player)) {
-            event.setCanceled(true);
-            player.setHealth(1.0F);
-        }
+        if (event.getEntity() instanceof ServerPlayer player && isRaging(player))
+            cleanupRage(player, false);
     }
 
     /**

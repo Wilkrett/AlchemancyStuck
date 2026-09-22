@@ -12,7 +12,11 @@
     "MiniAlchemiterMixin",
     "MiniAlchemiterGristCostMixin",
     "MachineProcessBlockEntityAccessor",
-    "InfusedPropertiesHelperMixin"
+    "InfusedPropertiesHelperMixin",
+    "ConnectionChannelAccessor",
+    "PlayerListNetHandlerMixin",
+    "ServerPlayerDeathMessageMixin",
+    "ServerPlayerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
