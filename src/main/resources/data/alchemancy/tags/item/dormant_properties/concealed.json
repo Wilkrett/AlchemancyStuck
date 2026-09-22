@@ -1,0 +1,26 @@
+{
+  "values": [
+    "minecraft:structure_void",
+    "minestuck:void_aspect_sapling",
+    "minestuck:void_aspect_bookshelf",
+    "minestuck:void_aspect_button",
+    "minestuck:void_aspect_carved_planks",
+    "minestuck:void_aspect_door",
+    "minestuck:void_aspect_fence",
+    "minestuck:void_aspect_fence_gate",
+    "minestuck:void_aspect_hanging_sign",
+    "minestuck:void_aspect_ladder",
+    "minestuck:void_aspect_leaves",
+    "minestuck:void_aspect_log",
+    "minestuck:void_aspect_planks",
+    "minestuck:void_aspect_stripped_wood",
+    "minestuck:void_aspect_pressure_plate",
+    "minestuck:void_aspect_sign",
+    "minestuck:void_aspect_slab",
+    "minestuck:void_aspect_stairs",
+    "minestuck:void_aspect_stripped_log",
+    "minestuck:void_aspect_stripped_wood",
+    "minestuck:void_aspect_trapdoor",
+    "minestuck:void_aspect_wood"
+  ]
+}

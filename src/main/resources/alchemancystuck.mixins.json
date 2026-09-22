@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "org.wilkretawesomesauce.alchemancystuck.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PunchDesignixMixin",
+    "TotemLatheMixin",
+    "MiniPunchDesignixMixin",
+    "MiniTotemLatheMixin",
+    "AlchemiterMixin",
+    "AlchemiterGristCostMixin",
+    "MiniAlchemiterMixin",
+    "MiniAlchemiterGristCostMixin",
+    "MachineProcessBlockEntityAccessor",
+    "InfusedPropertiesHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

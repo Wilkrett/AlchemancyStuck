@@ -1,0 +1,37 @@
+{
+  "property.alchemancystuck.magical": "Magical",
+
+  "infusion_codex.alchemancystuck:magical.flavor": "...Isn't this just lesser arcane?",
+  "infusion_codex.alchemancystuck:magical.modify_damage": "Causes 15% of the item's damage to be dealt as {arcane Magic} damage.",
+  "infusion_codex.alchemancystuck:magical.attribute_modifier": "Increases the item's {attribute Enchantability} by 3.",
+
+  "property.alchemancystuck.cruxite": "Cruxite",
+
+  "infusion_codex.alchemancystuck:cruxite.flavor": "IDK what to put here",
+  "infusion_codex.alchemancystuck:cruxite.reduce_grist_cost": "Reduces the {grist Grist} cost of alchemizing by 35%.",
+  "infusion_codex.alchemancystuck:cruxite.damage_buff": "While held or worn, increases damage dealt by 5% if the item's color matches your chosen color.",
+
+  "property.alchemancystuck.artifact": "Artifact",
+
+  "infusion_codex.alchemancystuck:artifact.flavor": "IDK what to put here.",
+  "infusion_codex.alchemancystuck:artifact.change_grist_type": "Changes the {grist Grist} cost of alchemizing with this item to an equivalent value of {grist Artifact} grist.",
+
+  "property.alchemancystuck.perfectly_generic": "Perfectly Generic",
+
+  "property.alchemancystuck.badass": "Badass",
+
+  "infusion_codex.alchemancystuck:badass.flavor": "cool guys dont look at explosions",
+  "infusion_codex.alchemancystuck:badass.explosion_effect": "While worn, if you're caught near an explosion while looking away from it, gain a random positive effect.",
+
+  "property.alchemancystuck.rage_inducing": "Rage Inducing",
+
+  "infusion_codex.alchemancystuck:rage_inducing.flavor": "honk. :o)",
+  "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage: you black out and let instinct take over, dealing 20% more damage, taking 20% less damage, and moving 80% faster, while growing famished 50% faster.",
+  "infusion_codex.alchemancystuck:rage_inducing.when_hit_worn": "5% chance to trigger the same Rage.",
+
+  "message.alchemancystuck.rage_inducing.activate1": "Something inside you snaps.",
+  "message.alchemancystuck.rage_inducing.activate2": "honk. :o)",
+  "message.alchemancystuck.rage_inducing.activate3": "ENGAGE MURDER MODE",
+
+  "effect.alchemancystuck.rage": "Rage"
+}

@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:ice_shard",
+    "minestuck:frosttooth",
+    "minestuck:club_zero",
+    "minestuck:frost_tile",
+    "minestuck:frost_tile_wall",
+    "minestuck:chiseled_frost_tile",
+    "minestuck:frost_bricks",
+    "minestuck:frost_brick_wall",
+    "minestuck:frost_column",
+    "minestuck:chiseled_frost_bricks",
+    "minestuck:cracked_frost_bricks",
+    "minestuck:flowery_frost_bricks",
+    "minestuck:flowery_frost_brick_stairs",
+    "minestuck:flowery_frost_brick_slab",
+    "minestuck:flowery_frost_brick_wall",
+    "minestuck:frost_tile_slab",
+    "minestuck:frost_tile_stairs",
+    "minestuck:frost_brick_stairs",
+    "minestuck:frost_brick_slab"
+  ]
+}

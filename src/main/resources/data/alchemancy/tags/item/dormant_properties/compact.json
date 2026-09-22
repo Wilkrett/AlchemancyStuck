@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minestuck:retractable_spikes",
+    "minestuck:wireless_redstone_receiver",
+    "minestuck:wireless_redstone_transmitter",
+    "minestuck:variable_solid_switch",
+    "minestuck:redstone_clock",
+    "minestuck:block_pressure_plate",
+    "minestuck:trajectory_block",
+    "minestuck:toggler",
+    "minestuck:stat_storer",
+    "minestuck:mini_alchemiter",
+    "minestuck:mini_cruxtruder",
+    "minestuck:mini_punch_designix",
+    "minestuck:mini_totem_lathe"
+  ]
+}

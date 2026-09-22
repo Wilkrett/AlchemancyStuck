@@ -1,0 +1,9 @@
+{
+  "flavor": {
+    "translate": "infusion_codex.alchemancystuck:rage_inducing.flavor"
+  },
+  "functions": [
+    "on_attack",
+    "when_hit_worn"
+  ]
+}

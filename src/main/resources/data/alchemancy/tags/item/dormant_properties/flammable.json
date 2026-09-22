@@ -1,0 +1,17 @@
+{
+  "values": [
+    "#minecraft:logs",
+    "#c:fence_gates/wooden",
+    "#minecraft:wooden_fences",
+    "#minecraft:wooden_buttons",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_pressure_plates",
+    "#minecraft:wooden_stairs",
+    "#minecraft:wooden_trapdoors",
+    "minestuck:the_last_straw",
+    "minestuck:hand_cranked_vampire_eraser",
+    "minestuck:hand_cranked_vampire_eraser_lipstick",
+    "minestuck:pointy_stick"
+  ]
+}
