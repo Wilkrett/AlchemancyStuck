@@ -54,10 +54,17 @@ import java.util.UUID;
  */
 public class RageCloneEntity extends ServerPlayer {
 
+    /**
+     * Every Nth landed hit (counted per clone, so a fresh rage always starts the count over) is a
+     * guaranteed critical hit - see {@link #rollGuaranteedCrit()} and {@code RageEffect#onCriticalHit}.
+     */
+    private static final int GUARANTEED_CRIT_INTERVAL = 5;
+
     @Nullable
     private UUID ownerUUID;
     @Nullable
     private RagePathBrainEntity pathBrain;
+    private int attacksLanded;
 
     private RageCloneEntity(MinecraftServer server, ServerLevel level, GameProfile profile) {
         super(server, level, profile, ClientInformation.createDefault());
@@ -286,6 +293,16 @@ public class RageCloneEntity extends ServerPlayer {
 
         this.attack(target);
         this.swing(InteractionHand.MAIN_HAND);
+    }
+
+    /**
+     * Called once per {@code CriticalHitEvent} this clone is the attacker for (i.e. once per landed
+     * hit, since that event only fires from inside the {@code f > 0.0F || f1 > 0.0F} branch of {@code
+     * Player#attack}) - increments the counter and reports whether this specific hit is the guaranteed
+     * Nth one. Instance state, not static, so it's scoped to this one clone/rage and always starts fresh.
+     */
+    public boolean rollGuaranteedCrit() {
+        return ++this.attacksLanded % GUARANTEED_CRIT_INTERVAL == 0;
     }
 
     /**

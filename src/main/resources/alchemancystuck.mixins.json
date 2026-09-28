@@ -19,12 +19,14 @@
     "ServerPlayerAccessor",
     "ServerPlayerScoreboardMixin",
     "DamageSourceAttributionMixin",
+    "RageCameraLockMixin",
     "ThrowablePropertyMixin",
     "VillagerDiscountMixin",
     "ConsortMerchantInventoryDiscountMixin"
   ],
   "client": [
-    "FontSbahjMixin"
+    "FontSbahjMixin",
+    "RageHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

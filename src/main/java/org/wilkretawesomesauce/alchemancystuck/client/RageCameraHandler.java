@@ -24,10 +24,20 @@ public class RageCameraHandler {
 
     private static boolean wasPossessing = false;
 
+    /**
+     * The one place this condition is spelled out - {@code RageHudMixin} reuses this rather than
+     * duplicating it, since "possessing" here specifically means camera-locked onto a live rage clone,
+     * not just "gamemode happens to be spectator" (a player who opened spectator mode themselves, with
+     * no clone involved, shouldn't have their HUD touched by either of these).
+     */
+    public static boolean isPossessing(Minecraft client) {
+        return client.player != null && client.player.isSpectator() && client.getCameraEntity() instanceof RageCloneEntity;
+    }
+
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event) {
         Minecraft client = Minecraft.getInstance();
-        boolean possessing = client.player != null && client.player.isSpectator() && client.getCameraEntity() instanceof RageCloneEntity;
+        boolean possessing = isPossessing(client);
 
         if (possessing) {
             if (client.options.getCameraType().isFirstPerson())

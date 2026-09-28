@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.wilkretawesomesauce.alchemancystuck.Alchemancystuck;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageCloneEntity;
@@ -160,6 +162,16 @@ public class RageEffect extends MobEffect {
         if (clone != null && clone.level() instanceof ServerLevel cloneLevel) {
             owner.teleportTo(cloneLevel, clone.getX(), clone.getY(), clone.getZ(), Set.of(), clone.getYRot(), clone.getXRot());
             owner.setHealth(overwhelmed ? 1.0F : (float) Math.min(clone.getHealth(), owner.getMaxHealth()));
+
+            // possess() copies the owner's equipment onto the clone at rage start, but nothing ever
+            // copied it back - so any durability lost (or an item outright breaking) during the fight
+            // only ever happened to the clone's disposable copy, never to the owner's real item, which
+            // sat completely untouched in their inventory the whole time. From the owner's perspective
+            // that read as "my weapon broke, then came back once the rage ended." Syncing the clone's
+            // final equipment back here is the missing other half of possess()'s copy.
+            for (EquipmentSlot slot : EquipmentSlot.values())
+                owner.setItemSlot(slot, clone.getItemBySlot(slot).copy());
+
             clone.despawn();
         } else if (overwhelmed) {
             owner.setHealth(1.0F);
@@ -209,6 +221,23 @@ public class RageEffect extends MobEffect {
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && isRaging(player))
             cleanupRage(player, false);
+    }
+
+    /**
+     * Every 5th hit the clone lands is a guaranteed critical hit. {@code CriticalHitEvent} fires once
+     * per {@code Player#attack} call that deals nonzero damage, on both the vanilla-critical and
+     * vanilla-non-critical path alike, so {@link RageCloneEntity#rollGuaranteedCrit()} - which
+     * increments its own per-clone counter every time this fires for it - is exactly "once per landed
+     * hit." The damage multiplier has to be set explicitly alongside {@code setCriticalHit(true)}: if
+     * this wasn't already a vanilla crit, the multiplier defaults to {@code 1.0F} (the non-crit value),
+     * so without this a forced crit would flag as critical (crit sound/particles, blocks sweep) but
+     * silently deal normal damage instead of the expected 1.5x.
+     */
+    public static void onCriticalHit(CriticalHitEvent event) {
+        if (event.getEntity() instanceof RageCloneEntity clone && clone.rollGuaranteedCrit()) {
+            event.setCriticalHit(true);
+            event.setDamageMultiplier(1.5F);
+        }
     }
 
     /**
