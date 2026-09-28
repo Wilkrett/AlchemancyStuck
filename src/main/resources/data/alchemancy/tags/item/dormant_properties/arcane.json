@@ -1,3 +1,7 @@
 {
-  "values": []
+  "replace": false,
+  "values": [
+    "minestuck:mwrthwl",
+    "minestuck:caledfwlch"
+  ]
 }

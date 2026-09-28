@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:home_grown_mace",
     "minestuck:doctor_deterrent",
@@ -14,6 +15,23 @@
     "minestuck:flowery_frost_bricks",
     "minestuck:flowery_frost_brick_stairs",
     "minestuck:flowery_frost_brick_slab",
-    "minestuck:flowery_frost_brick_wall"
+    "minestuck:flowery_frost_brick_wall",
+    "minestuck:flowery_mossy_stone_bricks",
+    "minestuck:flowery_mossy_stone_brick_stairs",
+    "minestuck:flowery_mossy_stone_brick_slab",
+    "minestuck:flowery_mossy_stone_brick_wall",
+    "minestuck:flowery_mycelium_brick_wall",
+    "minestuck:flowery_mycelium_bricks",
+    "minestuck:flowery_mycelium_brick_slab",
+    "minestuck:flowery_mycelium_brick_stairs",
+    "minestuck:flowery_mossy_cobblestone",
+    "minestuck:flowery_mossy_cobblestone_stairs",
+    "minestuck:flowery_mossy_cobblestone_slab",
+    "minestuck:flowery_mossy_cobblestone_wall",
+    "minestuck:flowery_chalk_bricks",
+    "minestuck:flowery_vine_log",
+    "minestuck:vine_log",
+    "minestuck:vine_wood",
+    "minestuck:flowery_vine_wood"
   ]
 }

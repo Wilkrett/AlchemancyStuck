@@ -1,3 +1,6 @@
 {
-  "values": []
+  "replace": false,
+  "values": [
+    "minestuck:blood_bucket"
+  ]
 }

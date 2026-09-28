@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:retractable_spikes",
     "minestuck:wireless_redstone_receiver",
@@ -12,6 +13,23 @@
     "minestuck:mini_alchemiter",
     "minestuck:mini_cruxtruder",
     "minestuck:mini_punch_designix",
-    "minestuck:mini_totem_lathe"
+    "minestuck:mini_totem_lathe",
+    "minestuck:cruxite_block",
+    "minestuck:cruxite_pillar",
+    "minestuck:smooth_cruxite_block",
+    "minestuck:chiseled_cruxite_block",
+    "minestuck:sandstone_cruxite_ore",
+    "minestuck:red_sandstone_cruxite_ore",
+    "minestuck:red_sandstone_gold_ore",
+    "minestuck:sandstone_gold_ore",
+    "minestuck:sandstone_uranium_ore",
+    "minestuck:red_sandstone_uranium_ore",
+    "minestuck:sandstone_iron_ore",
+    "minestuck:red_sandstone_iron_ore",
+    "minestuck:chiseled_sandstone_column",
+    "minestuck:chiseled_red_sandstone_column",
+    "minestuck:red_sandstone_column",
+    "minestuck:sandstone_column",
+    "minestuck:sugar_cube"
   ]
 }

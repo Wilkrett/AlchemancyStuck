@@ -4,6 +4,7 @@
   },
   "functions": [
     "on_attack",
-    "when_hit_worn"
+    "when_hit_worn",
+    "durability_loss"
   ]
 }

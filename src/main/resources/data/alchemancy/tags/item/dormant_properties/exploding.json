@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:tnt_minecart",
+    "minestuck:unstable_tnt",
+    "minecraft:tnt",
+    "minestuck:primed_tnt",
+    "minestuck:instant_tnt"
+  ]
+}

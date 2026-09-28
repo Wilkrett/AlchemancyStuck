@@ -6,8 +6,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +50,25 @@ public class RagePathBrainEntity extends PathfinderMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new RageChaseGoal(this, 1.5D));
         this.goalSelector.addGoal(2, new RageBreakBlockGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.2D));
         this.targetSelector.addGoal(1, new RageTargetGoal(this));
+    }
+
+    /**
+     * Default {@code Mob.createNavigation} returns {@code GroundPathNavigation}, whose {@code
+     * hasValidPathType} hardcodes {@code PathType.WATER -> false} - an absolute veto, not just a heavy
+     * malus, so a chase across/through water was previously impossible to path at all (the goal would
+     * just fail to find a path and give up at the shore). {@code AmphibiousPathNavigation} is vanilla's
+     * own navigator for mobs meant to path over both land and water. No {@code FloatGoal} alongside
+     * this - its constant surface-seeking jump impulse would fight a chase that actually needs to dive
+     * after a submerged target, and this entity is already invulnerable, so it was never protecting
+     * against drowning damage in the first place.
+     */
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new AmphibiousPathNavigation(this, level);
     }
 
     /**

@@ -28,7 +28,7 @@ public final class AlchemiterCostHelper {
             cost = reduced;
         }
 
-        if (InfusedPropertiesHelper.hasProperty(output, AddonProperties.ARTIFACT)) {
+        if (InfusedPropertiesHelper.hasProperty(output, AddonProperties.SBAHJ)) {
             GristType artifact = GristTypes.ARTIFACT.get();
             long totalAmount = 0;
             for (GristAmount amount : cost.asAmounts())

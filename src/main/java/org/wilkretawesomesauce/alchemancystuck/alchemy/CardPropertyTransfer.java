@@ -25,7 +25,8 @@ import java.util.List;
  * Each source passed in may be a captcha card, a cruxite dowel, or a real item stack. Regardless of which, two
  * kinds of properties are carried over:
  * <ul>
- *     <li>properties already infused onto the source (via {@link InfusedPropertiesHelper#getInfusedProperties}),
+ *     <li>properties already infused or stored onto the source (via
+ *     {@link InfusedPropertiesHelper#getInfusedProperties}/{@link InfusedPropertiesHelper#getStoredProperties}),
  *     read both from the source itself (self-consistent with whatever this class previously wrote onto a card or
  *     dowel) and from the item it represents, if any</li>
  *     <li>properties the item the source represents has dormant potential for (via its {@code dormant_properties}
@@ -33,6 +34,12 @@ import java.util.List;
  *     Cards and dowels are never themselves tagged this way, so this only matters once resolved to the real item
  *     the card/dowel encodes</li>
  * </ul>
+ * <p>
+ * {@code target} itself is either a card/dowel container (Punch Designix, Totem Lathe) or the real decoded item
+ * (Alchemiter). Only the Alchemiter's target should actually have these properties active while it's just sitting
+ * in an inventory, so {@code asContainer} controls where the carried properties land: {@link
+ * InfusedPropertiesHelper#storeProperties} (inert, ignored by {@code hasProperty}/{@code forEachProperty}) for a
+ * container, versus {@link InfusedPropertiesHelper#addProperties} (live) for a real item.
  */
 public final class CardPropertyTransfer
 {
@@ -40,36 +47,93 @@ public final class CardPropertyTransfer
 	{
 	}
 
-	public static ItemStack carryProperties(ItemStack target, ItemStack... sources)
+	public static ItemStack carryProperties(ItemStack target, boolean asContainer, ItemStack... sources)
 	{
 		if(target.isEmpty())
 			return target;
 
 		List<Holder<Property>> toApply = new ArrayList<>();
-
 		for(ItemStack source : sources)
+			toApply.addAll(collectFromSource(target, source));
+
+		return applyProperties(target, asContainer, toApply);
+	}
+
+	/**
+	 * Same property-carrying as {@link #carryProperties}, but for exactly two sources that are meant to
+	 * contribute evenly rather than pooled - the Totem Lathe combining two cards with no matching
+	 * Minestuck recipe should end up with half of card 1's properties and half of card 2's, not
+	 * whichever properties happen to survive truncation after dumping both cards into one list (which,
+	 * given {@link #carryProperties}'s combine order, would always favor card 1).
+	 */
+	public static ItemStack carrySplitProperties(ItemStack target, boolean asContainer, ItemStack source1, ItemStack source2)
+	{
+		if(target.isEmpty())
+			return target;
+
+		int half = InfusedPropertiesHelper.getInfusionSlots(target) / 2;
+
+		List<Holder<Property>> toApply = new ArrayList<>();
+		toApply.addAll(capTo(collectFromSource(target, source1), half));
+		toApply.addAll(capTo(collectFromSource(target, source2), half));
+
+		return applyProperties(target, asContainer, toApply);
+	}
+
+	private static List<Holder<Property>> capTo(List<Holder<Property>> properties, int limit)
+	{
+		return properties.size() <= limit ? properties : new ArrayList<>(properties.subList(0, limit));
+	}
+
+	private static List<Holder<Property>> collectFromSource(ItemStack target, ItemStack source)
+	{
+		if(source == null || source.isEmpty())
+			return List.of();
+
+		List<Holder<Property>> collected = new ArrayList<>();
+		ItemStack represented = resolveRepresentedItem(source);
+
+		collected.addAll(InfusedPropertiesHelper.getInfusedProperties(source));
+		collected.addAll(InfusedPropertiesHelper.getStoredProperties(source));
+		PropertyDataComponent.mergeData(target, source);
+
+		if(represented != source)
 		{
-			if(source == null || source.isEmpty())
-				continue;
-
-			ItemStack represented = resolveRepresentedItem(source);
-
-			toApply.addAll(InfusedPropertiesHelper.getInfusedProperties(source));
-			PropertyDataComponent.mergeData(target, source);
-
-			if(represented != source)
-			{
-				toApply.addAll(InfusedPropertiesHelper.getInfusedProperties(represented));
-				PropertyDataComponent.mergeData(target, represented);
-			}
-
-			toApply.addAll(collectApplicableDormantProperties(represented, target));
+			collected.addAll(InfusedPropertiesHelper.getInfusedProperties(represented));
+			collected.addAll(InfusedPropertiesHelper.getStoredProperties(represented));
+			PropertyDataComponent.mergeData(target, represented);
 		}
 
-		if(!toApply.isEmpty())
-			target = InfusedPropertiesHelper.addProperties(target, toApply);
+		collected.addAll(collectApplicableDormantProperties(represented, target));
+		return collected;
+	}
 
-		return target;
+	private static ItemStack applyProperties(ItemStack target, boolean asContainer, List<Holder<Property>> toApply)
+	{
+		if(toApply.isEmpty())
+			return target;
+
+		if(asContainer)
+		{
+			List<Holder<Property>> combined = new ArrayList<>(InfusedPropertiesHelper.getStoredProperties(target));
+			for(Holder<Property> holder : toApply)
+				if(!combined.contains(holder))
+					combined.add(holder);
+
+			// Alchemancy's own merge points (ForgeRecipeGrid, AlchemancyCatalystBlock) always truncate
+			// immediately after adding, with no "staging above the cap, truncate later" exception - mirror
+			// that here via the same Mutable#truncateProperties algorithm, rather than letting a card/dowel
+			// accumulate an unbounded number of stored properties across repeated no-recipe combinations.
+			InfusedPropertiesComponent.Mutable mutable = new InfusedPropertiesComponent.Mutable(new InfusedPropertiesComponent(combined));
+			mutable.truncateProperties(InfusedPropertiesHelper.getInfusionSlots(target));
+
+			return InfusedPropertiesHelper.storeProperties(target, mutable.toImutable().properties());
+		}
+		else
+		{
+			target = InfusedPropertiesHelper.addProperties(target, toApply);
+			return InfusedPropertiesHelper.truncateProperties(target);
+		}
 	}
 
 	/**

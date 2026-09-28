@@ -1,6 +1,27 @@
 {
+  "replace": false,
   "values": [
     "minestuck:clown_club",
-    "minestuck:carnie_club"
+    "minestuck:carnie_club",
+    "minestuck:rage_aspect_sign",
+    "minestuck:rage_aspect_stairs",
+    "minestuck:rage_aspect_stripped_log",
+    "minestuck:rage_aspect_bookshelf",
+    "minestuck:rage_aspect_log",
+    "minestuck:rage_aspect_hanging_sign",
+    "minestuck:rage_aspect_door",
+    "minestuck:rage_aspect_fence",
+    "minestuck:rage_aspect_ladder",
+    "minestuck:rage_aspect_carved_planks",
+    "minestuck:rage_aspect_trapdoor",
+    "minestuck:rage_aspect_leaves",
+    "minestuck:rage_aspect_planks",
+    "minestuck:rage_aspect_slab",
+    "minestuck:rage_aspect_wood",
+    "minestuck:rage_aspect_sapling",
+    "minestuck:rage_aspect_pressure_plate",
+    "minestuck:rage_aspect_stripped_wood",
+    "minestuck:rage_aspect_fence_gate",
+    "minestuck:rage_aspect_button"
   ]
 }

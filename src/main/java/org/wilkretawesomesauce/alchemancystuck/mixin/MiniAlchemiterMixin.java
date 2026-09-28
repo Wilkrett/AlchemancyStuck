@@ -18,6 +18,6 @@ public abstract class MiniAlchemiterMixin
 	@ModifyExpressionValue(method = "processContents", at = @At(value = "INVOKE", target = "Lcom/mraof/minestuck/item/components/EncodedItemComponent;getEncodedOrBlank(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;"))
 	private ItemStack alchemancystuck$carryProperties(ItemStack original, @Local ItemStack card)
 	{
-		return CardPropertyTransfer.carryProperties(original, card);
+		return CardPropertyTransfer.carryProperties(original, false, card);
 	}
 }

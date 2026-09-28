@@ -1,0 +1,8 @@
+{
+  "flavor": {
+    "translate": "infusion_codex.alchemancystuck:perfectly_generic.flavor"
+  },
+  "functions": [
+    "other_effects"
+  ]
+}

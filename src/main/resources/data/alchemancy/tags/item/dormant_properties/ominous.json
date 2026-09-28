@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:doom_aspect_log",
+    "minestuck:doom_aspect_wood",
+    "minestuck:doom_aspect_stripped_log",
+    "minestuck:doom_aspect_stripped_wood",
+    "minestuck:doom_aspect_planks",
+    "minestuck:doom_aspect_carved_planks",
+    "minestuck:doom_aspect_stairs",
+    "minestuck:doom_aspect_slab",
+    "minestuck:doom_aspect_fence",
+    "minestuck:doom_aspect_fence_gate",
+    "minestuck:doom_aspect_door",
+    "minestuck:doom_aspect_trapdoor",
+    "minestuck:doom_aspect_bookshelf",
+    "minestuck:doom_aspect_hanging_sign",
+    "minestuck:doom_aspect_pressure_plate",
+    "minestuck:doom_aspect_button",
+    "minestuck:doom_aspect_sign",
+    "minestuck:doom_aspect_ladder",
+    "minestuck:doom_aspect_sapling",
+    "minestuck:doom_aspect_leaves",
+    "minestuck:mini_typheus_statue"
+  ]
+}

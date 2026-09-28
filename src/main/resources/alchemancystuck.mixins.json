@@ -16,7 +16,15 @@
     "ConnectionChannelAccessor",
     "PlayerListNetHandlerMixin",
     "ServerPlayerDeathMessageMixin",
-    "ServerPlayerAccessor"
+    "ServerPlayerAccessor",
+    "ServerPlayerScoreboardMixin",
+    "DamageSourceAttributionMixin",
+    "ThrowablePropertyMixin",
+    "VillagerDiscountMixin",
+    "ConsortMerchantInventoryDiscountMixin"
+  ],
+  "client": [
+    "FontSbahjMixin"
   ],
   "injectors": {
     "defaultRequire": 1

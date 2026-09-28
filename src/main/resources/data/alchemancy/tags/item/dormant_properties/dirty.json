@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:thought_dirt",
+    "minestuck:blue_dirt",
+    "minestuck:flowery_mycelium_brick_wall",
+    "minestuck:flowery_mycelium_bricks",
+    "minestuck:flowery_mycelium_brick_slab",
+    "minestuck:flowery_mycelium_brick_stairs",
+    "minestuck:mossy_mycelium_brick_wall",
+    "minestuck:mossy_mycelium_brick_slab",
+    "minestuck:mossy_mycelium_brick_stairs",
+    "minestuck:mossy_mycelium_bricks"
+  ]
+}

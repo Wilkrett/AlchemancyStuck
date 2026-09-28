@@ -1,9 +1,37 @@
 {
+  "replace": false,
   "values": [
     "minestuck:wet_pumord",
     "minestuck:fire_poker",
     "minestuck:too_hot_to_handle",
     "minestuck:thousand_degree_knife",
-    "minestuck:wet_pumord"
+    "minestuck:molten_amber_bucket",
+    "minestuck:cindered_log",
+    "minestuck:cindered_wood",
+    "minestuck:stripped_cindered_log",
+    "minestuck:stripped_cindered_wood",
+    "minestuck:cindered_planks",
+    "minestuck:cindered_stairs",
+    "minestuck:cindered_slab",
+    "minestuck:cindered_fence",
+    "minestuck:cindered_fence_gate",
+    "minestuck:cindered_door",
+    "minestuck:cindered_trapdoor",
+    "minestuck:cindered_pressure_plate",
+    "minestuck:cindered_button",
+    "minestuck:cindered_sign",
+    "minestuck:cindered_hanging_sign",
+    "minestuck:cindered_bookshelf",
+    "minestuck:cindered_ladder",
+    "minestuck:magmatic_black_stone_bricks",
+    "minestuck:magmatic_polished_igneous_bricks",
+    "minestuck:magmatic_black_stone_brick_wall",
+    "minestuck:magmatic_polished_igneous_brick_wall",
+    "minestuck:magmatic_polished_igneous_brick_stairs",
+    "minestuck:magmatic_igneous_stone",
+    "minestuck:magmatic_polished_igneous_brick_slab",
+    "minestuck:magmatic_black_stone_brick_stairs",
+    "minestuck:magmatic_black_stone_brick_slab",
+    "minestuck:heat_lamp"
   ]
 }

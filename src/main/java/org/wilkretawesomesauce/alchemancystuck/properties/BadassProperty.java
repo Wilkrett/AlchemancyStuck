@@ -2,6 +2,7 @@ package org.wilkretawesomesauce.alchemancystuck.properties;
 
 import net.cibernet.alchemancy.item.components.InfusedPropertiesHelper;
 import net.cibernet.alchemancy.properties.Property;
+import net.cibernet.alchemancy.util.ColorUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -62,6 +63,6 @@ public class BadassProperty extends Property {
 
     @Override
     public int getColor(ItemStack itemStack) {
-        return 0xE25822;
+        return ColorUtils.sineColorsOverTime(2f,0xE25822, 0x000000);
     }
 }

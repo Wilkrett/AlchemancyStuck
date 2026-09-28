@@ -1,9 +1,27 @@
 {
+  "replace": false,
   "values": [
     "minestuck:firestarter",
     "minestuck:barbasol",
     "minestuck:barbasol_bomb",
     "minestuck:barber_basher",
-    "minestuck:barbers_magic_touch"
+    "minestuck:barbers_magic_touch",
+    "minestuck:cindered_log",
+    "minestuck:cindered_wood",
+    "minestuck:stripped_cindered_log",
+    "minestuck:stripped_cindered_wood",
+    "minestuck:cindered_planks",
+    "minestuck:cindered_stairs",
+    "minestuck:cindered_slab",
+    "minestuck:cindered_fence",
+    "minestuck:cindered_fence_gate",
+    "minestuck:cindered_door",
+    "minestuck:cindered_trapdoor",
+    "minestuck:cindered_pressure_plate",
+    "minestuck:cindered_button",
+    "minestuck:cindered_sign",
+    "minestuck:cindered_hanging_sign",
+    "minestuck:cindered_bookshelf",
+    "minestuck:cindered_ladder"
   ]
 }

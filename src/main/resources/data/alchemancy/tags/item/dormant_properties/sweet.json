@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:cinnamon_sword",
     "minestuck:scalemate_cinnamonwhiff",
@@ -24,9 +25,7 @@
     "minestuck:cotton_candy_faygo",
     "minestuck:creme_soda_faygo",
     "minestuck:faygo_cola",
-    "minestuck:faygo_cola",
     "minestuck:grape_faygo",
-    "minestuck:moon_mist_faygo",
     "minestuck:moon_mist_faygo",
     "minestuck:orange_faygo",
     "minestuck:peach_faygo",
@@ -68,6 +67,7 @@
     "minestuck:coffee_claws_sheathed",
     "minestuck:toffee_club",
     "minestuck:lancelots_lolly",
-    "minestuck:cinnamon_sword"
+    "minestuck:molten_amber_bucket",
+    "minestuck:sugar_cube"
   ]
 }

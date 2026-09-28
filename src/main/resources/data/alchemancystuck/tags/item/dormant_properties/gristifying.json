@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:grist_widget",
+    "minestuck:grist_collector",
+    "minestuck:mine_and_grist"
+  ]
+}

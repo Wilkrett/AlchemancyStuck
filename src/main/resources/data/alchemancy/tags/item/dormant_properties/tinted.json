@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minestuck:water_colors_bucket",
-    "alchemancy:infusion_codex"
+    "minestuck:water_colors_bucket"
   ]
 }

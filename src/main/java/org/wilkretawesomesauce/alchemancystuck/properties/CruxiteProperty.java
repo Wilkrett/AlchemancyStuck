@@ -2,9 +2,12 @@ package org.wilkretawesomesauce.alchemancystuck.properties;
 
 import com.mraof.minestuck.player.IdentifierHandler;
 import com.mraof.minestuck.util.ColorHandler;
+import net.cibernet.alchemancy.item.components.InfusedPropertiesHelper;
 import net.cibernet.alchemancy.properties.Property;
+import net.cibernet.alchemancy.registries.AlchemancyProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -32,9 +35,15 @@ public class CruxiteProperty extends Property {
         if (attackDamage == null)
             return;
 
-        int itemColor = ColorHandler.getColorFromStack(itemStack);
-        int playerColor = ColorHandler.getColorForPlayer(IdentifierHandler.encode(player), player.level());
+        int itemColor = FastColor.ARGB32.opaque(ColorHandler.getColorFromStack(itemStack));
+        int playerColor = FastColor.ARGB32.opaque(ColorHandler.getColorForPlayer(IdentifierHandler.encode(player), player.level()));
         boolean matches = itemColor == playerColor;
+
+        if (!matches && InfusedPropertiesHelper.hasProperty(itemStack, AlchemancyProperties.TINTED)) {
+            int tintedColor = FastColor.ARGB32.opaque(AlchemancyProperties.TINTED.value().getColor(itemStack));
+            matches = tintedColor == playerColor;
+        }
+
         boolean hasModifier = attackDamage.hasModifier(DAMAGE_MOD_KEY);
 
         if (matches && !hasModifier) {

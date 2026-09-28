@@ -1,7 +1,6 @@
 package org.wilkretawesomesauce.alchemancystuck.entity;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
@@ -12,7 +11,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -56,20 +54,10 @@ import java.util.UUID;
  */
 public class RageCloneEntity extends ServerPlayer {
 
-    /**
-     * Chance, checked once per second, to flip between the two attack modes - not a per-rage coin
-     * flip, so a single rage can drift between a few seconds of frenzied mashing and a few seconds of
-     * proper, fully-charged swings, unpredictably, the way an actual berserker would rather than
-     * settling into one fixed rhythm for the whole 30 seconds.
-     */
-    private static final float ATTACK_MODE_SWITCH_CHANCE_PER_SECOND = 0.25F;
-
     @Nullable
     private UUID ownerUUID;
     @Nullable
     private RagePathBrainEntity pathBrain;
-    private int ticksUntilNextAttack;
-    private boolean spamClicking;
 
     private RageCloneEntity(MinecraftServer server, ServerLevel level, GameProfile profile) {
         super(server, level, profile, ClientInformation.createDefault());
@@ -162,27 +150,33 @@ public class RageCloneEntity extends ServerPlayer {
     }
 
     /**
-     * Copies the owner's current effective combat stats, equipment, and health onto this clone.
-     * {@code RageEffect#startRage} grants this clone its own copy of {@link RageEffect} right after
-     * calling this - that's where the attack damage/armor/speed buffs actually come from, not from
-     * anything here.
+     * Copies the owner's current effective combat stats, active effects, equipment, and health onto
+     * this clone. {@code RageEffect#startRage} grants this clone its own copy of {@link RageEffect}
+     * right after calling this - that's where the attack damage/armor/speed buffs actually come from,
+     * not from anything here.
+     * <p>
+     * {@code AttributeMap#assignAllValues} copies every attribute the owner's map has an instance for -
+     * base value <em>and</em> modifiers - not just a hand-picked few. A hardcoded list here previously
+     * missed {@code ATTACK_SPEED} (relying entirely on {@code detectEquipmentUpdates} independently
+     * reconstructing the weapon's own penalty from the copied equipment) and silently missed anything
+     * else outside that list too - {@code ATTACK_KNOCKBACK}, {@code LUCK}, and any attribute any other
+     * mod (Alchemancy included) might add. Active potion/mob effects are a completely separate system
+     * from attributes and were never copied at all - a real {@code Strength} or similar buff the owner
+     * had running would silently not carry over to the clone, while still affecting the owner's own
+     * (now-spectating, not fighting) body. Rage itself is excluded here since {@code startRage} grants
+     * it separately right after this returns - the owner already has their own "marker" copy active by
+     * the time this runs (that's what triggered {@code onEffectAdded} in the first place), so without
+     * this exclusion the clone would end up with two independently-tracked Rage instances.
      */
     private void possess(ServerPlayer owner) {
-        copyAttributeValue(owner, Attributes.MAX_HEALTH);
-        copyAttributeValue(owner, Attributes.ATTACK_DAMAGE);
-        copyAttributeValue(owner, Attributes.ARMOR);
-        copyAttributeValue(owner, Attributes.ARMOR_TOUGHNESS);
-        copyAttributeValue(owner, Attributes.MOVEMENT_SPEED);
-        copyAttributeValue(owner, Attributes.KNOCKBACK_RESISTANCE);
+        this.getAttributes().assignAllValues(owner.getAttributes());
+
+        for (MobEffectInstance effect : owner.getActiveEffects())
+            if (!effect.getEffect().is(AddonMobEffects.RAGE.getKey()))
+                this.addEffect(new MobEffectInstance(effect));
 
         for (EquipmentSlot slot : EquipmentSlot.values())
             this.setItemSlot(slot, owner.getItemBySlot(slot).copy());
-    }
-
-    private void copyAttributeValue(Player owner, Holder<Attribute> attribute) {
-        AttributeInstance instance = this.getAttribute(attribute);
-        if (instance != null)
-            instance.setBaseValue(owner.getAttributeValue(attribute));
     }
 
     @Nullable
@@ -235,10 +229,23 @@ public class RageCloneEntity extends ServerPlayer {
         this.moveTo(this.pathBrain.getX(), this.pathBrain.getY(), this.pathBrain.getZ(), this.pathBrain.getYRot(), this.pathBrain.getXRot());
         this.setYHeadRot(this.pathBrain.getYHeadRot());
 
-        if (this.tickCount % 20 == 0 && this.random.nextFloat() < ATTACK_MODE_SWITCH_CHANCE_PER_SECOND)
-            this.spamClicking = !this.spamClicking;
+        // A real ServerPlayer's onGround flag is normally set from the client's own movement packets
+        // (ServerGamePacketListenerImpl calling setOnGroundWithMovement with whatever the client
+        // reported) - never computed server-side the way a Mob's is. FakeConnection never sends any
+        // such packets, so without this it stays stuck at its initial false forever, which silently
+        // disables sweep attacks entirely (Player#attack's sweep condition requires onGround() to be
+        // true). The path brain is a real Mob and already maintains its own onGround correctly through
+        // normal physics, so just mirror it here alongside position.
+        this.setOnGround(this.pathBrain.onGround());
 
-        this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
+        // Same category of gap as onGround: Player#attack's sweep condition also requires
+        // walked-distance-this-tick < getSpeed(), but LivingEntity#speed is a plain field only ever
+        // written by MoveControl#tick() - a Mob concept this Player-typed entity has none of - so it
+        // sits at its default 0.0F forever. Since the walked-distance side of that comparison can never
+        // be negative, "< 0.0F" can never be true, permanently failing the check no matter how still
+        // this actually is. The path brain's MoveControl already maintains a real speed value; mirror it.
+        this.setSpeed(this.pathBrain.getSpeed());
+
         tryAttack();
     }
 
@@ -248,36 +255,37 @@ public class RageCloneEntity extends ServerPlayer {
      * is the entire reason this class is a {@code ServerPlayer} now: it's what makes sweep, crits, and
      * (the original motivation for this whole rewrite) custom on-hit weapon effects via
      * {@code ItemStack#hurtEnemy} actually fire, none of which {@code Mob} combat can ever reach.
+     *
+     * <p>Gates on {@link #getAttackStrengthScale} directly - the same value {@code attack()} itself
+     * uses to decide crits/sweep/damage scaling - rather than a separately hand-rolled tick counter.
+     * A parallel counter has to independently reconstruct vanilla's {@code 20 / attackSpeed} timing and
+     * stay in lockstep with {@code attackStrengthTicker} (which only increments inside {@code doTick()})
+     * every tick forever; reading the real value directly can't drift out of sync with it, and every
+     * swing that lands is by construction the same "fully charged" swing a real player would get from
+     * waiting for their crosshair to fill before clicking.
+     *
+     * <p>{@link #attack} has to run <em>before</em> {@link #swing} - not the more natural-looking
+     * "swing, then land the hit" order - because {@code ServerPlayer} overrides {@code swing} to call
+     * {@code resetAttackStrengthTicker()} as a side effect (harmless for a real client, whose melee
+     * attacks never actually go through {@code ServerPlayer#swing} - the animation other players see
+     * comes from a separate path entirely). Calling it ourselves right before {@code attack()} was
+     * wiping out the exact charge just confirmed to be full a moment earlier, so every hit was computed
+     * at near-zero charge no matter how long this waited. {@code attack()} resets the ticker itself once
+     * it's done with it, so swinging after is redundant but harmless.
      */
     private void tryAttack() {
-        if (this.pathBrain == null)
+        if (this.pathBrain == null || this.getAttackStrengthScale(1.0F) < 1.0F)
             return;
 
         LivingEntity target = this.pathBrain.getTarget();
-        if (target == null || !target.isAlive() || this.ticksUntilNextAttack > 0)
+        if (target == null || !target.isAlive())
             return;
 
         if (!this.pathBrain.isWithinMeleeAttackRange(target) || !this.pathBrain.getSensing().hasLineOfSight(target))
             return;
 
-        this.ticksUntilNextAttack = attackIntervalTicks();
-        this.swing(InteractionHand.MAIN_HAND);
         this.attack(target);
-    }
-
-    /**
-     * The "full swing" branch waits out the held weapon's real attack-speed cooldown, same as before -
-     * a fully-charged {@code Player#attack} hit. The "spam clicking" branch has no cooldown at all -
-     * it attacks every single tick it's in range - which, since it's still real {@code Player#attack},
-     * naturally comes out as a nonstop flurry of weak, under-charged hits via vanilla's own
-     * attack-strength-scale math, not something this has to fake separately.
-     */
-    private int attackIntervalTicks() {
-        if (this.spamClicking)
-            return 1;
-
-        double attackSpeed = this.getAttributeValue(Attributes.ATTACK_SPEED);
-        return attackSpeed > 0.0 ? Math.max(1, Math.round(20.0F / (float) attackSpeed)) : 20;
+        this.swing(InteractionHand.MAIN_HAND);
     }
 
     /**
@@ -311,6 +319,21 @@ public class RageCloneEntity extends ServerPlayer {
 
         if (owner != null)
             RageEffect.endRage(owner, true);
+    }
+
+    /**
+     * {@code ExperienceOrb.playerTouch} calls this on whichever player physically walks over the orb -
+     * since this clone is the one standing on the corpse it just made, that's always this clone itself,
+     * never the (likely elsewhere, spectating) owner. Redirecting here is simpler than trying to keep
+     * the clone away from its own kills' orbs.
+     */
+    @Override
+    public void giveExperiencePoints(int xpPoints) {
+        ServerPlayer owner = getOwnerPlayer();
+        if (owner != null)
+            owner.giveExperiencePoints(xpPoints);
+        else
+            super.giveExperiencePoints(xpPoints);
     }
 
     @Override

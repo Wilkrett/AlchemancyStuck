@@ -1,6 +1,21 @@
 {
+  "replace": false,
   "values": [
     "minestuck:swonge",
-    "minestuck:pumord"
+    "minestuck:pumord",
+    "minestuck:pumice_tile_wall",
+    "minestuck:pumice_stone",
+    "minestuck:pumice_tile_stairs",
+    "minestuck:pumice_stone_pressure_plate",
+    "minestuck:pumice_tile_slab",
+    "minestuck:pumice_stone_wall",
+    "minestuck:pumice_stone_stairs",
+    "minestuck:pumice_brick_slab",
+    "minestuck:pumice_tiles",
+    "minestuck:pumice_stone_button",
+    "minestuck:pumice_brick_wall",
+    "minestuck:pumice_bricks",
+    "minestuck:pumice_brick_stairs",
+    "minestuck:pumice_stone_slab"
   ]
 }

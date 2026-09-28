@@ -1,0 +1,9 @@
+{
+  "flavor": {
+    "translate": "infusion_codex.alchemancystuck:aimbot.flavor"
+  },
+  "functions": [
+    "on_click",
+    "while_worn"
+  ]
+}

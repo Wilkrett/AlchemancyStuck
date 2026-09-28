@@ -1,11 +1,10 @@
 {
+  "replace": false,
   "values": [
-    "minestuck:sord",
-    "minestuck:shatter_bacon",
-    "minestuck:nife",
-    "minestuck:batleacks",
-    "minestuck:lanec",
-    "minestuck:eeeeeeeeeeee",
-    "minestuck:artifucker"
+    "minestuck:oil_bucket",
+    "minestuck:tar_shade_bricks",
+    "minestuck:tar_shade_brick_stairs",
+    "minestuck:tar_shade_brick_slab",
+    "minestuck:tar_shade_brick_wall"
   ]
 }

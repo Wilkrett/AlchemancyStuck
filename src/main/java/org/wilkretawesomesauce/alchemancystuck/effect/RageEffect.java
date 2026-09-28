@@ -29,8 +29,8 @@ import java.util.UUID;
 /**
  * Owns the entire rage lifecycle - {@code RageInducingProperty} does nothing but roll the rare
  * chance and call {@code player.addEffect(...)}; everything downstream of "the player now has this
- * effect" (spawning the clone, the spectator/camera swap, the hunger drain, ending the rage, and
- * login/logout edge cases) lives here.
+ * effect" (spawning the clone, the spectator/camera swap, ending the rage, and login/logout edge
+ * cases) lives here.
  *
  * <p>Applied twice per rage: once to the owning player (the "marker" copy - its {@link #onEffectAdded}
  * is what kicks the whole thing off, and its duration is what naturally ends it via
@@ -53,14 +53,6 @@ public class RageEffect extends MobEffect {
     private static final ResourceLocation SPEED_BONUS = ResourceLocation.fromNamespaceAndPath(Alchemancystuck.MODID, "rage_speed_bonus");
     private static final String TAG_PRIOR_GAMEMODE = "alchemancystuck:rage_prior_gamemode";
     private static final int ACTIVATE_MESSAGE_COUNT = 3;
-
-    /**
-     * "50% faster" is measured against a continuous-sprint baseline (vanilla sprinting causes
-     * ~0.1 exhaustion per block moved, at ~5.6 blocks/sec that's roughly 0.028 exhaustion/tick).
-     */
-    private static final float BASELINE_EXHAUSTION_PER_TICK = 0.028F;
-    private static final float RAGE_EXHAUSTION_MULTIPLIER = 1.5F;
-    private static final float EXHAUSTION_PER_TICK = BASELINE_EXHAUSTION_PER_TICK * RAGE_EXHAUSTION_MULTIPLIER;
 
     /**
      * Per-level increments for the attribute bonuses below - amplifier 0 (the effect's default,
@@ -93,19 +85,6 @@ public class RageEffect extends MobEffect {
         // so on forever - a runaway chain of clones each broadcasting their own "joined the game".
         if (entity instanceof ServerPlayer owner && !(entity instanceof RageCloneEntity) && entity.level() instanceof ServerLevel level && !isRaging(owner))
             startRage(owner, level);
-    }
-
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return duration % 20 == 0 && duration != 0;
-    }
-
-    @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        if (livingEntity instanceof ServerPlayer player)
-            player.causeFoodExhaustion(EXHAUSTION_PER_TICK * 20);
-
-        return true;
     }
 
     public static boolean isRaging(ServerPlayer player) {

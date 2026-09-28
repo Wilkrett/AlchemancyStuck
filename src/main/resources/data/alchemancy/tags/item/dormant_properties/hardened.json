@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:sandstone_cruxite_ore",
+    "minestuck:red_sandstone_cruxite_ore",
+    "minestuck:red_sandstone_gold_ore",
+    "minestuck:sandstone_gold_ore",
+    "minestuck:sandstone_uranium_ore",
+    "minestuck:red_sandstone_uranium_ore",
+    "minestuck:sandstone_iron_ore",
+    "minestuck:red_sandstone_iron_ore",
+    "minestuck:mossy_decrepit_stone_brick_stairs",
+    "minestuck:mossy_decrepit_stone_brick_slab",
+    "minestuck:mossy_decrepit_stone_brick_wall",
+    "minestuck:mossy_decrepit_stone_bricks",
+    "minestuck:flowery_mossy_stone_bricks",
+    "minestuck:flowery_mossy_stone_brick_stairs",
+    "minestuck:flowery_mossy_stone_brick_slab",
+    "minestuck:flowery_mossy_stone_brick_wall",
+    "minestuck:chiseled_sandstone_column",
+    "minestuck:chiseled_red_sandstone_column",
+    "minestuck:red_sandstone_column",
+    "minestuck:sandstone_column",
+    "minestuck:brown_stone_bricks",
+    "minestuck:cracked_brown_stone_bricks"
+  ]
+}

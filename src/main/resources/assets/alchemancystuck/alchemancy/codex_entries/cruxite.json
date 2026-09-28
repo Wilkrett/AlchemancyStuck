@@ -3,7 +3,7 @@
     "translate": "infusion_codex.alchemancystuck:cruxite.flavor"
   },
   "functions": [
-    "reduce_grist_cost",
-    "damage_buff"
+    "other_effects",
+    "while_equipped"
   ]
 }

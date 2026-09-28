@@ -1,0 +1,12 @@
+{
+  "flavor": {
+    "translate": "infusion_codex.alchemancystuck:sbahj.flavor"
+  },
+  "functions": [
+    "on_attack",
+    "attribute_modifier",
+    "other_effects",
+    "affects_attributes",
+    "while_worn"
+  ]
+}

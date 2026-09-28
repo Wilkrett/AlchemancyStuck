@@ -1,8 +1,0 @@
-{
-  "flavor": {
-    "translate": "infusion_codex.alchemancystuck:artifact.flavor"
-  },
-  "functions": [
-    "change_grist_type"
-  ]
-}

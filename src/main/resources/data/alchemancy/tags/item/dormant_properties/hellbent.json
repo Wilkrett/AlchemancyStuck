@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:netherrack_coal_ore",
+    "minestuck:netherrack_cruxite_ore",
+    "minestuck:netherrack_uranium_ore"
+  ]
+}

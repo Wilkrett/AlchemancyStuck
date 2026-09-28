@@ -3,6 +3,6 @@
     "translate": "infusion_codex.alchemancystuck:badass.flavor"
   },
   "functions": [
-    "explosion_effect"
+    "while_worn"
   ]
 }

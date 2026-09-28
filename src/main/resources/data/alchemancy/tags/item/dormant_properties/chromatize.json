@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:stripped_rainbow_wood",
+    "minestuck:rainbow_ladder",
+    "minestuck:rainbow_wood",
+    "minestuck:rainbow_door",
+    "minestuck:rainbow_planks",
+    "minestuck:rainbow_pressure_plate",
+    "minestuck:rainbow_button",
+    "minestuck:stripped_rainbow_log",
+    "minestuck:rainbow_hanging_sign",
+    "minestuck:rainbow_bookshelf",
+    "minestuck:rainbow_fence_gate",
+    "minestuck:rainbow_log",
+    "minestuck:rainbow_sapling",
+    "minestuck:rainbow_fence",
+    "minestuck:rainbow_planks_stairs",
+    "minestuck:rainbow_planks_slab",
+    "minestuck:rainbow_trapdoor",
+    "minestuck:rainbow_sign",
+    "minestuck:rainbow_leaves",
+    "minestuck:water_colors_bucket"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:heart_aspect_door",
+    "minestuck:heart_aspect_wood",
+    "minestuck:heart_aspect_trapdoor",
+    "minestuck:heart_aspect_stripped_log",
+    "minestuck:heart_aspect_leaves",
+    "minestuck:heart_aspect_stripped_wood",
+    "minestuck:heart_aspect_slab",
+    "minestuck:heart_aspect_ladder",
+    "minestuck:heart_aspect_hanging_sign",
+    "minestuck:heart_aspect_pressure_plate",
+    "minestuck:heart_aspect_log",
+    "minestuck:heart_aspect_fence_gate",
+    "minestuck:heart_aspect_bookshelf",
+    "minestuck:heart_aspect_planks",
+    "minestuck:heart_aspect_sign",
+    "minestuck:heart_aspect_sapling",
+    "minestuck:heart_aspect_button",
+    "minestuck:heart_aspect_fence",
+    "minestuck:heart_aspect_carved_planks",
+    "minestuck:heart_aspect_stairs"
+  ]
+}

@@ -1,3 +1,25 @@
 {
-  "values": []
+  "replace": false,
+  "values": [
+    "minestuck:life_aspect_log",
+    "minestuck:life_aspect_stairs",
+    "minestuck:life_aspect_sapling",
+    "minestuck:life_aspect_fence_gate",
+    "minestuck:life_aspect_pressure_plate",
+    "minestuck:life_aspect_fence",
+    "minestuck:life_aspect_door",
+    "minestuck:life_aspect_bookshelf",
+    "minestuck:life_aspect_wood",
+    "minestuck:life_aspect_hanging_sign",
+    "minestuck:life_aspect_trapdoor",
+    "minestuck:life_aspect_button",
+    "minestuck:life_aspect_carved_planks",
+    "minestuck:life_aspect_slab",
+    "minestuck:life_aspect_planks",
+    "minestuck:life_aspect_stripped_log",
+    "minestuck:life_aspect_sign",
+    "minestuck:life_aspect_stripped_wood",
+    "minestuck:life_aspect_ladder",
+    "minestuck:life_aspect_leaves"
+  ]
 }

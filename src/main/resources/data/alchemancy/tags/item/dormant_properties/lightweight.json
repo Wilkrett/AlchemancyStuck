@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:end_stone_cruxite_ore",
+    "minestuck:end_stone_uranium_ore",
+    "minestuck:end_stone_iron_ore",
+    "minestuck:end_stone_redstone_ore",
+    "minestuck:end_grass",
+    "minestuck:coarse_end_stone",
+    "minestuck:dense_cloud",
+    "minestuck:bright_dense_cloud"
+  ]
+}

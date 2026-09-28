@@ -1,7 +1,28 @@
 {
+  "replace": false,
   "values": [
     "minestuck:trajectory_block",
     "minestuck:motor_fan",
-    "minestuck:atomic_vaporizer"
+    "minestuck:atomic_vaporizer",
+    "minestuck:breath_aspect_fence",
+    "minestuck:breath_aspect_trapdoor",
+    "minestuck:breath_aspect_ladder",
+    "minestuck:breath_aspect_door",
+    "minestuck:breath_aspect_wood",
+    "minestuck:breath_aspect_slab",
+    "minestuck:breath_aspect_planks",
+    "minestuck:breath_aspect_bookshelf",
+    "minestuck:breath_aspect_hanging_sign",
+    "minestuck:breath_aspect_pressure_plate",
+    "minestuck:breath_aspect_log",
+    "minestuck:breath_aspect_stripped_log",
+    "minestuck:breath_aspect_button",
+    "minestuck:breath_aspect_stairs",
+    "minestuck:breath_aspect_carved_planks",
+    "minestuck:breath_aspect_fence_gate",
+    "minestuck:breath_aspect_leaves",
+    "minestuck:breath_aspect_stripped_wood",
+    "minestuck:breath_aspect_sapling",
+    "minestuck:breath_aspect_sign"
   ]
 }

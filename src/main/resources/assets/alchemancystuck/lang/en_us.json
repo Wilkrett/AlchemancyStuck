@@ -7,31 +7,71 @@
 
   "property.alchemancystuck.cruxite": "Cruxite",
 
-  "infusion_codex.alchemancystuck:cruxite.flavor": "IDK what to put here",
-  "infusion_codex.alchemancystuck:cruxite.reduce_grist_cost": "Reduces the {grist Grist} cost of alchemizing by 35%.",
-  "infusion_codex.alchemancystuck:cruxite.damage_buff": "While held or worn, increases damage dealt by 5% if the item's color matches your chosen color.",
-
-  "property.alchemancystuck.artifact": "Artifact",
-
-  "infusion_codex.alchemancystuck:artifact.flavor": "IDK what to put here.",
-  "infusion_codex.alchemancystuck:artifact.change_grist_type": "Changes the {grist Grist} cost of alchemizing with this item to an equivalent value of {grist Artifact} grist.",
+  "infusion_codex.alchemancystuck:cruxite.flavor": "Eat the apple john.",
+  "infusion_codex.alchemancystuck:cruxite.other_effects": "Reduces the {grist Grist} cost of alchemizing by 35%.",
+  "infusion_codex.alchemancystuck:cruxite.while_equipped": "While held or worn, increases damage dealt by 5% if the item's color matches your chosen color.",
 
   "property.alchemancystuck.perfectly_generic": "Perfectly Generic",
+
+  "infusion_codex.alchemancystuck:perfectly_generic.flavor": "It's a perfectly generic property, perhaps a bit too perfect.",
+  "infusion_codex.alchemancystuck:perfectly_generic.other_effects": "Disables all other properties. The perfection scares you a little.",
 
   "property.alchemancystuck.badass": "Badass",
 
   "infusion_codex.alchemancystuck:badass.flavor": "cool guys dont look at explosions",
-  "infusion_codex.alchemancystuck:badass.explosion_effect": "While worn, if you're caught near an explosion while looking away from it, gain a random positive effect.",
+  "infusion_codex.alchemancystuck:badass.while_worn": "While worn, if you're caught near an explosion while looking away from it, gain a random positive effect.",
 
   "property.alchemancystuck.rage_inducing": "Rage Inducing",
 
   "infusion_codex.alchemancystuck:rage_inducing.flavor": "honk. :o)",
-  "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage. Dealing 20% more damage, taking 20% less damage, moving 80% faster, while draining hunger 50% faster.",
+  "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage. Dealing 20% more damage, taking 20% less damage, and moving 80% faster.",
   "infusion_codex.alchemancystuck:rage_inducing.when_hit_worn": "5% chance to trigger the same Rage.",
+  "infusion_codex.alchemancystuck:rage_inducing.durability_loss": "The weapon loses durability twice as fast.",
 
   "message.alchemancystuck.rage_inducing.activate1": "Something inside you snaps.",
   "message.alchemancystuck.rage_inducing.activate2": "honk. :o)",
   "message.alchemancystuck.rage_inducing.activate3": "ENGAGE MURDER MODE",
 
-  "effect.alchemancystuck.rage": "Rage"
+  "effect.alchemancystuck.rage": "Rage",
+
+  "property.alchemancystuck.gristifying": "Gristifying",
+
+  "infusion_codex.alchemancystuck:gristifying.flavor": "waste not, want not.",
+  "infusion_codex.alchemancystuck:gristifying.on_kill": "While held, enemies drop {grist Grist} (at half their loot's value) instead of their normal loot.",
+
+  "property.alchemancystuck.sbahj": "SBAHJ",
+
+  "infusion_codex.alchemancystuck:sbahj.flavor": "where MAKING THIS HAPEN",
+  "infusion_codex.alchemancystuck:sbahj.on_attack": "25% chance on attack to slip out of your hand and land on the ground.",
+  "infusion_codex.alchemancystuck:sbahj.attribute_modifier": "I WARNED YOU ABOUT THE PROPERTY DOG!!!",
+  "infusion_codex.alchemancystuck:sbahj.other_effects": "Converts the {grist Grist} cost of alchemizing with this item to {grist Artifact} grist.",
+  "infusion_codex.alchemancystuck:sbahj.affects_attributes": "Antigrav, Edible, Aimbot, Throwable, Discount, Conveyed",
+  "infusion_codex.alchemancystuck:sbahj.while_worn": "65% chance to eject itself when equipped",
+
+  "message.alchemancystuck.sbahj.drop1": "The shittiness of the weapon made it phase through your hand",
+  "message.alchemancystuck.sbahj.drop2": "Whoopsies doopsies you dwopped it!!",
+  "message.alchemancystuck.sbahj.drop3": "fuck......ahhhahahaaa....",
+  "message.alchemancystuck.sbahj.drop4": "It slips from your grasp. typical.",
+  "message.alchemancystuck.sbahj.drop5": "I WARNED YOU ABOUT PROPERTY BRO!!!! I TOLD YOU DOG!",
+  "message.alchemancystuck.sbahj.drop6": "I TOLD YOU MAN!",
+
+  "message.alchemancystuck.sbahj.equip_fail1": "fuck",
+  "message.alchemancystuck.sbahj.equip_fail2": "come ON",
+  "message.alchemancystuck.sbahj.equip_fail3": "who would even make these......",
+  "message.alchemancystuck.sbahj.equip_fail4": "*sign*...",
+
+  "message.alchemancystuck.sbahj.liftoff": "LIFDOFF",
+  "message.alchemancystuck.sbahj.edible": "ahahahaha just HOW HIGH do you even have to BE just to DO something like that.......",
+  "message.alchemancystuck.sbahj.economy": "the econony is in ruins? pfff...... ",
+
+  "property.alchemancystuck.aimbot": "Aimbot",
+
+  "infusion_codex.alchemancystuck:aimbot.flavor": "rekt.",
+  "infusion_codex.alchemancystuck:aimbot.on_click": "Attacking or right-clicking with the item snaps your view onto the nearest visible living thing within 11 blocks.",
+  "infusion_codex.alchemancystuck:aimbot.while_worn": "While worn, does the same every tick.",
+
+  "property.alchemancystuck.discount": "Discount",
+
+  "infusion_codex.alchemancystuck:discount.flavor": "loyalty card not included.",
+  "infusion_codex.alchemancystuck:discount.other_effects": "When in inventory; villagers and consorts charge you 5% less per item carried, up to 30% off."
 }

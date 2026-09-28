@@ -14,7 +14,7 @@ import org.wilkretawesomesauce.alchemancystuck.alchemy.AlchemiterCostHelper;
 /**
  * Both {@code contentsValid} (the afford-check gating whether crafting starts) and {@code processContents}
  * (the actual deduction) call {@code GristCostRecipe.findCostForItem} independently on the same
- * property-carrying decoded stack (see {@link MiniAlchemiterMixin}), so both need the Cruxite/Artifact
+ * property-carrying decoded stack (see {@link MiniAlchemiterMixin}), so both need the Cruxite/SBAHJ
  * cost adjustment applied identically, or the machine can stall refusing to start a craft it can actually afford.
  */
 @Mixin(MiniAlchemiterBlockEntity.class)

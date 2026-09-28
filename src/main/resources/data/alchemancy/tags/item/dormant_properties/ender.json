@@ -1,6 +1,25 @@
 {
   "replace": false,
   "values": [
-    "minestuck:ender_bucket"
+    "minestuck:ender_bucket",
+    "minestuck:end_planks",
+    "minestuck:end_planks_stairs",
+    "minestuck:end_planks_slab",
+    "minestuck:end_log",
+    "minestuck:end_wood",
+    "minestuck:stripped_end_log",
+    "minestuck:stripped_end_wood",
+    "minestuck:end_fence",
+    "minestuck:end_fence_gate",
+    "minestuck:end_door",
+    "minestuck:end_trapdoor",
+    "minestuck:end_pressure_plate",
+    "minestuck:end_button",
+    "minestuck:end_sign",
+    "minestuck:end_hanging_sign",
+    "minestuck:end_bookshelf",
+    "minestuck:end_ladder",
+    "minestuck:end_leaves",
+    "minestuck:end_sapling"
   ]
 }

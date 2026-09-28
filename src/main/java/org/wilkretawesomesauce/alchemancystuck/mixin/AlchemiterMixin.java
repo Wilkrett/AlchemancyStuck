@@ -22,6 +22,6 @@ public abstract class AlchemiterMixin
 	@ModifyReturnValue(method = "getOutput", at = @At("RETURN"))
 	private ItemStack alchemancystuck$carryProperties(ItemStack original)
 	{
-		return CardPropertyTransfer.carryProperties(original, this.dowel);
+		return CardPropertyTransfer.carryProperties(original, false, this.dowel);
 	}
 }

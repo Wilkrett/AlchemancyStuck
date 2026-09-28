@@ -8,6 +8,6 @@ public class PerfectlyGenericProperty extends Property {
  */
     @Override
     public int getColor(ItemStack stack) {
-        return 0x9A9A9A;
+        return 0x20d20b;
     }
 }

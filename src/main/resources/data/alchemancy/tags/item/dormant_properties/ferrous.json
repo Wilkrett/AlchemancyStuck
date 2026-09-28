@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:claw_hammer",
     "minestuck:cat_claws_drawn",
@@ -21,6 +22,27 @@
     "minestuck:iron_boat",
     "minestuck:steel_edge_candycutter",
     "minestuck:keyblade",
-    "minestuck:sorcerers_pinball"
+    "minestuck:sorcerers_pinball",
+    "minestuck:cast_iron",
+    "minestuck:cast_iron_pressure_plate",
+    "minestuck:cast_iron_tile",
+    "minestuck:cast_iron_tile_stairs",
+    "minestuck:cast_iron_tile_slab",
+    "minestuck:cast_iron_wall",
+    "minestuck:cast_iron_button",
+    "minestuck:cast_iron_sheet",
+    "minestuck:cast_iron_sheet_stairs",
+    "minestuck:cast_iron_stairs",
+    "minestuck:cast_iron_sheet_slab",
+    "minestuck:cast_iron_slab",
+    "minestuck:chiseled_cast_iron",
+    "minestuck:cast_iron_frame",
+    "minestuck:steel_beam",
+    "minestuck:uncarved_wood_iron_ore",
+    "minestuck:sandstone_iron_ore",
+    "minestuck:end_stone_iron_ore",
+    "minestuck:red_sandstone_iron_ore",
+    "minestuck:molten_amber_bucket",
+    "minestuck:carving_tool"
   ]
 }

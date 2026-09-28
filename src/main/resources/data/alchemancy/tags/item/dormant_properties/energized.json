@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:rotator",
     "minestuck:wireless_redstone_receiver",
@@ -7,6 +8,7 @@
     "minestuck:block_teleporter",
     "minestuck:trajectory_block",
     "minestuck:summoner",
-    "minestuck:platform_receptacle"
+    "minestuck:platform_receptacle",
+    "minestuck:remote_comparator"
   ]
 }

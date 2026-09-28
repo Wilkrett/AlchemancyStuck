@@ -6,6 +6,6 @@ import net.minecraft.world.item.ItemStack;
 public class AlchemizingProperty extends Property {
     @Override
     public int getColor(ItemStack itemStack) {
-        return 0;
+        return 0x4be14e;
     }
 }

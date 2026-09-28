@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minestuck:frosty_macuahuitl",
     "minestuck:macuahuitl",
@@ -6,6 +7,10 @@
     "minestuck:thorn_in_your_side",
     "minestuck:thorny_subject",
     "minestuck:thistleblower_lipstick",
-    "minestuck:thistleblower"
+    "minestuck:thistleblower",
+    "minestuck:igneous_spike",
+    "minestuck:blooming_cactus",
+    "minestuck:wooden_cactus",
+    "minecraft:cactus"
   ]
 }

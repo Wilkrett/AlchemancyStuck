@@ -11,7 +11,7 @@ import org.wilkretawesomesauce.alchemancystuck.alchemy.AlchemiterCostHelper;
 
 /**
  * {@code getGristCost} prices the item from {@code getOutput()}, which by then already carries any Alchemancy
- * properties transferred from the dowel (see {@link AlchemiterMixin}). Cruxite and Artifact both change what
+ * properties transferred from the dowel (see {@link AlchemiterMixin}). Cruxite and SBAHJ both change what
  * the alchemizer is actually charged, so they're applied here, before payment, rather than as a refund after.
  */
 @Mixin(AlchemiterBlockEntity.class)

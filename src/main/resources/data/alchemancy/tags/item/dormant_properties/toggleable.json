@@ -1,5 +1,7 @@
 {
+  "replace": false,
   "values": [
-    "minestuck:toggler"
+    "minestuck:toggler",
+    "minestuck:summoner"
   ]
 }

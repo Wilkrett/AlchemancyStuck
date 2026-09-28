@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minestuck:perfectly_generic_wall",
+    "minestuck:perfectly_generic_trapdoor",
+    "minestuck:perfectly_generic_slab",
+    "minestuck:perfectly_generic_fence_gate",
+    "minestuck:perfectly_generic_button",
+    "minestuck:perfectly_generic_door",
+    "minestuck:perfectly_generic_pressure_plate",
+    "minestuck:perfectly_generic_sign",
+    "minestuck:perfectly_generic_fence",
+    "minestuck:perfectly_generic_hanging_sign",
+    "minestuck:perfectly_generic_stairs",
+    "minestuck:generic_object"
+  ]
+}
