@@ -236,22 +236,25 @@ public class RageCloneEntity extends ServerPlayer {
         this.moveTo(this.pathBrain.getX(), this.pathBrain.getY(), this.pathBrain.getZ(), this.pathBrain.getYRot(), this.pathBrain.getXRot());
         this.setYHeadRot(this.pathBrain.getYHeadRot());
 
-        // A real ServerPlayer's onGround flag is normally set from the client's own movement packets
-        // (ServerGamePacketListenerImpl calling setOnGroundWithMovement with whatever the client
-        // reported) - never computed server-side the way a Mob's is. FakeConnection never sends any
-        // such packets, so without this it stays stuck at its initial false forever, which silently
-        // disables sweep attacks entirely (Player#attack's sweep condition requires onGround() to be
-        // true). The path brain is a real Mob and already maintains its own onGround correctly through
-        // normal physics, so just mirror it here alongside position.
+        // moveTo (above) is a raw teleport - it never runs the normal Entity#move collision/physics
+        // pass, so none of the fields that pass would normally derive (onGround, speed, fallDistance)
+        // ever get set for this entity on their own; each is stuck at its Java default forever unless
+        // mirrored here explicitly. The path brain is a real Mob that already maintains all three
+        // correctly through normal physics, so just copy them over alongside position/rotation:
+        //  - onGround: normally set for a ServerPlayer from the client's own movement packets
+        //    (ServerGamePacketListenerImpl calling setOnGroundWithMovement with whatever the client
+        //    reported), never computed server-side the way a Mob's is - FakeConnection never sends any
+        //    such packets. Player#attack's sweep condition requires this to be true.
+        //  - speed: LivingEntity#speed is a plain field only ever written by MoveControl#tick(), a Mob
+        //    concept this Player-typed entity has none of. Player#attack's sweep condition also requires
+        //    walked-distance-this-tick < getSpeed(), which can never hold against a permanently-0 speed.
+        //  - fallDistance: a public field normally accumulated by Entity#move's own fall tracking.
+        //    Player#attack's crit condition requires fallDistance > 0.0F - without this, a natural
+        //    hit-while-falling crit (as opposed to this addon's own guaranteed-every-5th-hit crit) could
+        //    never trigger no matter how far this was actually falling a moment ago.
         this.setOnGround(this.pathBrain.onGround());
-
-        // Same category of gap as onGround: Player#attack's sweep condition also requires
-        // walked-distance-this-tick < getSpeed(), but LivingEntity#speed is a plain field only ever
-        // written by MoveControl#tick() - a Mob concept this Player-typed entity has none of - so it
-        // sits at its default 0.0F forever. Since the walked-distance side of that comparison can never
-        // be negative, "< 0.0F" can never be true, permanently failing the check no matter how still
-        // this actually is. The path brain's MoveControl already maintains a real speed value; mirror it.
         this.setSpeed(this.pathBrain.getSpeed());
+        this.fallDistance = this.pathBrain.fallDistance;
 
         tryAttack();
     }

@@ -46,10 +46,15 @@ public final class PropertiesCommand
 		}
 
 		List<Holder<Property>> infused = InfusedPropertiesHelper.getInfusedProperties(held);
+		List<Holder<Property>> stored = InfusedPropertiesHelper.getStoredProperties(held);
 		List<Holder<Property>> dormant = AlchemancyProperties.getDormantProperties(held);
 
+		List<Holder<Property>> active = new java.util.ArrayList<>();
+		InfusedPropertiesHelper.forEachProperty(held, active::add);
+
 		source.sendSuccess(() -> Component.literal(held.getHoverName().getString()
-				+ " - infused: " + names(infused) + " | dormant: " + names(dormant)), false);
+				+ " - infused: " + names(infused) + " | stored: " + names(stored)
+				+ " | dormant: " + names(dormant) + " | active: " + names(active)), false);
 		return 1;
 	}
 

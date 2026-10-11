@@ -12,7 +12,9 @@ import org.wilkretawesomesauce.alchemancystuck.alchemy.CardPropertyTransfer;
 
 /**
  * Same treatment as {@link PunchDesignixMixin}, but for the miniature Punch Designix, which has its own
- * independent {@code createResult} implementation.
+ * independent {@code createResult} implementation. Slot 0 holds the existing card/item being re-punched;
+ * the output ends up with exactly slot 0's existing properties, and slot 1 never contributes any of its
+ * own, discovered or otherwise.
  */
 @Mixin(MiniPunchDesignixBlockEntity.class)
 public abstract class MiniPunchDesignixMixin
@@ -36,6 +38,6 @@ public abstract class MiniPunchDesignixMixin
 	private ItemStack alchemancystuck$carryProperties(ItemStack original)
 	{
 		ItemStackHandler itemHandler = ((MachineProcessBlockEntityAccessor)(Object) this).alchemancystuck$getItemHandler();
-		return CardPropertyTransfer.carryProperties(original, true, itemHandler.getStackInSlot(0), itemHandler.getStackInSlot(1));
+		return CardPropertyTransfer.overwriteWithProperties(original, true, itemHandler.getStackInSlot(0));
 	}
 }

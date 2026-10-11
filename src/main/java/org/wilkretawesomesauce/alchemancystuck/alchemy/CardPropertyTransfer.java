@@ -65,19 +65,89 @@ public final class CardPropertyTransfer
 	 * Minestuck recipe should end up with half of card 1's properties and half of card 2's, not
 	 * whichever properties happen to survive truncation after dumping both cards into one list (which,
 	 * given {@link #carryProperties}'s combine order, would always favor card 1).
+	 * <p>
+	 * The 50/50 split only applies when both sources actually contribute something - if one slot is
+	 * empty (e.g. carving a dowel from a single card with no second card present), the other source
+	 * isn't artificially capped to half; it carries over in full, same as {@link #carryProperties}.
 	 */
 	public static ItemStack carrySplitProperties(ItemStack target, boolean asContainer, ItemStack source1, ItemStack source2)
 	{
 		if(target.isEmpty())
 			return target;
 
-		int half = InfusedPropertiesHelper.getInfusionSlots(target) / 2;
+		boolean hasSource1 = source1 != null && !source1.isEmpty();
+		boolean hasSource2 = source2 != null && !source2.isEmpty();
 
 		List<Holder<Property>> toApply = new ArrayList<>();
-		toApply.addAll(capTo(collectFromSource(target, source1), half));
-		toApply.addAll(capTo(collectFromSource(target, source2), half));
+		if(hasSource1 && hasSource2)
+		{
+			int half = InfusedPropertiesHelper.getInfusionSlots(target) / 2;
+			toApply.addAll(capTo(collectFromSource(target, source1), half));
+			toApply.addAll(capTo(collectFromSource(target, source2), half));
+		}
+		else
+		{
+			toApply.addAll(collectFromSource(target, source1));
+			toApply.addAll(collectFromSource(target, source2));
+		}
 
 		return applyProperties(target, asContainer, toApply);
+	}
+
+	/**
+	 * Like {@link #carryProperties}, but replaces {@code target}'s properties with exactly {@code
+	 * source}'s existing ones instead of pooling them together - used by the Punch Designix family,
+	 * where re-punching a card should leave it a clean copy of the newly-typed item's properties, not
+	 * a growing combination of everything ever punched into it. Only properties {@code source} already
+	 * carries (infused/stored) transfer; unlike {@link #carryProperties}, {@code source}'s dormant
+	 * potential is never discovered/activated here, since this is a replacement of {@code target}, not
+	 * a forge-style combination of it with something else.
+	 */
+	public static ItemStack overwriteWithProperties(ItemStack target, boolean asContainer, ItemStack source)
+	{
+		if(target.isEmpty())
+			return target;
+
+		return applyPropertiesOverwrite(target, asContainer, collectExistingProperties(target, source));
+	}
+
+	private static List<Holder<Property>> collectExistingProperties(ItemStack target, ItemStack source)
+	{
+		if(source == null || source.isEmpty())
+			return List.of();
+
+		List<Holder<Property>> collected = new ArrayList<>();
+		ItemStack represented = resolveRepresentedItem(source);
+
+		collected.addAll(InfusedPropertiesHelper.getInfusedProperties(source));
+		collected.addAll(InfusedPropertiesHelper.getStoredProperties(source));
+		PropertyDataComponent.mergeData(target, source);
+
+		if(represented != source)
+		{
+			collected.addAll(InfusedPropertiesHelper.getInfusedProperties(represented));
+			collected.addAll(InfusedPropertiesHelper.getStoredProperties(represented));
+			PropertyDataComponent.mergeData(target, represented);
+		}
+
+		return collected;
+	}
+
+	private static ItemStack applyPropertiesOverwrite(ItemStack target, boolean asContainer, List<Holder<Property>> properties)
+	{
+		if(asContainer)
+		{
+			InfusedPropertiesComponent.Mutable mutable = new InfusedPropertiesComponent.Mutable(new InfusedPropertiesComponent(new ArrayList<>(properties)));
+			mutable.truncateProperties(InfusedPropertiesHelper.getInfusionSlots(target));
+
+			return InfusedPropertiesHelper.storeProperties(target, mutable.toImutable().properties());
+		}
+		else
+		{
+			target.remove(AlchemancyItems.Components.INFUSED_PROPERTIES);
+			target = InfusedPropertiesHelper.addProperties(target, properties);
+			return InfusedPropertiesHelper.truncateProperties(target);
+		}
 	}
 
 	private static List<Holder<Property>> capTo(List<Holder<Property>> properties, int limit)

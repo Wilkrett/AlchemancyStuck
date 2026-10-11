@@ -1,6 +1,7 @@
 package org.wilkretawesomesauce.alchemancystuck.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mraof.minestuck.api.alchemy.GristSet;
 import com.mraof.minestuck.blockentity.machine.AlchemiterBlockEntity;
 import net.minecraft.world.item.ItemStack;
@@ -21,8 +22,8 @@ public abstract class AlchemiterGristCostMixin
 	public abstract ItemStack getOutput();
 
 	@ModifyReturnValue(method = "getGristCost", at = @At("RETURN"))
-	private GristSet alchemancystuck$applyCostProperties(GristSet original)
+	private GristSet alchemancystuck$applyCostProperties(GristSet original, @Local(ordinal = 0) int count)
 	{
-		return AlchemiterCostHelper.applyCostProperties(original, getOutput());
+		return AlchemiterCostHelper.applyCostProperties(original, getOutput(), count);
 	}
 }

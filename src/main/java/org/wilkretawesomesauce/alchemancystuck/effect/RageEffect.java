@@ -21,6 +21,7 @@ import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.wilkretawesomesauce.alchemancystuck.Alchemancystuck;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageCloneEntity;
+import org.wilkretawesomesauce.alchemancystuck.registry.AddonAttachments;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonMobEffects;
 
 import java.util.HashMap;
@@ -99,6 +100,7 @@ public class RageEffect extends MobEffect {
 
     private static void startRage(ServerPlayer owner, ServerLevel level) {
         RageCloneEntity clone = RageCloneEntity.spawn(owner);
+        clone.setData(AddonAttachments.IS_RAGE_CLONE, true);
         clone.addEffect(new MobEffectInstance(AddonMobEffects.RAGE, DURATION_TICKS, 0, false, false));
 
         owner.getPersistentData().putInt(TAG_PRIOR_GAMEMODE, owner.gameMode.getGameModeForPlayer().getId());

@@ -26,6 +26,7 @@
   "infusion_codex.alchemancystuck:rage_inducing.flavor": "honk. :o)",
   "infusion_codex.alchemancystuck:rage_inducing.on_attack": "5% chance to send you into a 30 second Rage. Dealing 20% more damage, taking 20% less damage, and moving 80% faster.",
   "infusion_codex.alchemancystuck:rage_inducing.when_hit_worn": "5% chance to trigger the same Rage.",
+  "infusion_codex.alchemancystuck:rage_inducing.when_raging": "Gain 20% more damage, armor and 80% more speed. Every 5th hit is a guaranteed critical hit.",
   "infusion_codex.alchemancystuck:rage_inducing.durability_loss": "The weapon loses durability twice as fast.",
 
   "message.alchemancystuck.rage_inducing.activate1": "Something inside you snaps.",
@@ -45,7 +46,7 @@
   "infusion_codex.alchemancystuck:sbahj.on_attack": "25% chance on attack to slip out of your hand and land on the ground.",
   "infusion_codex.alchemancystuck:sbahj.attribute_modifier": "I WARNED YOU ABOUT THE PROPERTY DOG!!!",
   "infusion_codex.alchemancystuck:sbahj.other_effects": "Converts the {grist Grist} cost of alchemizing with this item to {grist Artifact} grist.",
-  "infusion_codex.alchemancystuck:sbahj.affects_attributes": "Antigrav, Edible, Aimbot, Throwable, Discount, Conveyed",
+  "infusion_codex.alchemancystuck:sbahj.special_interactions": "Antigrav, Edible, Aimbot, Throwable, Discount, Conveyed",
   "infusion_codex.alchemancystuck:sbahj.while_worn": "65% chance to eject itself when equipped",
 
   "message.alchemancystuck.sbahj.drop1": "The shittiness of the weapon made it phase through your hand",
@@ -67,8 +68,9 @@
   "property.alchemancystuck.aimbot": "Aimbot",
 
   "infusion_codex.alchemancystuck:aimbot.flavor": "rekt.",
-  "infusion_codex.alchemancystuck:aimbot.on_click": "Attacking or right-clicking with the item snaps your view onto the nearest visible living thing within 11 blocks.",
-  "infusion_codex.alchemancystuck:aimbot.while_worn": "While worn, does the same every tick.",
+  "infusion_codex.alchemancystuck:aimbot.on_attack": "Look at the nearest entity within 11 blocks.",
+  "infusion_codex.alchemancystuck:aimbot.when_used": "Look at the nearest entity within 11 blocks.",
+  "infusion_codex.alchemancystuck:aimbot.while_worn": "Look at the nearest entity within 11 blocks.",
 
   "property.alchemancystuck.discount": "Discount",
 

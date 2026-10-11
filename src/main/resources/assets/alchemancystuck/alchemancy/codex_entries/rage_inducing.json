@@ -5,6 +5,7 @@
   "functions": [
     "on_attack",
     "when_hit_worn",
+    "when_raging",
     "durability_loss"
   ]
 }

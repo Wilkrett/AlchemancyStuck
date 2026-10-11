@@ -3,7 +3,8 @@
     "translate": "infusion_codex.alchemancystuck:aimbot.flavor"
   },
   "functions": [
-    "on_click",
+    "on_attack",
+    "when_used",
     "while_worn"
   ]
 }

@@ -5,6 +5,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
@@ -12,8 +13,10 @@ import org.wilkretawesomesauce.alchemancystuck.command.PropertiesCommand;
 import org.wilkretawesomesauce.alchemancystuck.effect.RageEffect;
 import org.wilkretawesomesauce.alchemancystuck.properties.BadassProperty;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonEntities;
+import org.wilkretawesomesauce.alchemancystuck.registry.AddonAttachments;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonMobEffects;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
+import org.wilkretawesomesauce.alchemancystuck.registry.AddonSoundEvents;
 
 @Mod(Alchemancystuck.MODID)
 public class Alchemancystuck {
@@ -25,7 +28,11 @@ public class Alchemancystuck {
         AddonProperties.PROPERTIES.register(modEventBus);
         AddonEntities.ENTITIES.register(modEventBus);
         AddonMobEffects.MOB_EFFECTS.register(modEventBus);
+        AddonAttachments.ATTACHMENT_TYPES.register(modEventBus);
+        AddonSoundEvents.SOUND_EVENTS.register(modEventBus);
         modEventBus.addListener(AddonEntities::onEntityAttributeCreation);
+
+        modContainer.registerConfig(ModConfig.Type.SERVER, Config.Server.SPEC);
 
         NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
         NeoForge.EVENT_BUS.addListener(BadassProperty::onExplosionDetonate);

@@ -26,6 +26,6 @@ public abstract class MiniAlchemiterGristCostMixin
 	)
 	private GristSet alchemancystuck$applyCostProperties(ItemStack output, GristType wildcardGrist, boolean allowMissing, Level level, Operation<GristSet> original)
 	{
-		return AlchemiterCostHelper.applyCostProperties(original.call(output, wildcardGrist, allowMissing, level), output);
+		return AlchemiterCostHelper.applyCostProperties(original.call(output, wildcardGrist, allowMissing, level), output, 1);
 	}
 }

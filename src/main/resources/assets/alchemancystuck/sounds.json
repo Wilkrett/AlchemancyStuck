@@ -1,0 +1,20 @@
+{
+  "rage.bad_to_the_bone": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "alchemancystuck:rage/bad_to_the_bone",
+        "stream": true
+      }
+    ]
+  },
+  "rage.the_carnival": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "alchemancystuck:rage/the_carnival",
+        "stream": true
+      }
+    ]
+  }
+}

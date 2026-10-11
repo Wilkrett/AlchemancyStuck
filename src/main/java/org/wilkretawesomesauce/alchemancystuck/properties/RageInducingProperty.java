@@ -28,6 +28,13 @@ public class RageInducingProperty extends Property {
     private static final float TRIGGER_CHANCE = 0.05F;
     private static final int EXTRA_DURABILITY_DAMAGE = 1;
 
+    /**
+     * Shared with {@code RageVignetteRenderer}, so the screen vignette during a rage cycles through
+     * the exact same colors, in sync, as this property's own item tint.
+     */
+    public static final float COLOR_CYCLE_SPEED = 0.6F;
+    public static final int[] COLOR_CYCLE = {0x8B0000, 0x8d0400, 0x4b1853, 0x631db4};
+
     @Override
     public void modifyAttackDamage(Entity user, ItemStack weapon, LivingDamageEvent.Pre event) {
 
@@ -54,6 +61,6 @@ public class RageInducingProperty extends Property {
 
     @Override
     public int getColor(ItemStack stack) {
-        return ColorUtils.interpolateColorsOverTime(0.6f, 0x8B0000, 0x8d0400, 0x4b1853, 0x631db4);
+        return ColorUtils.interpolateColorsOverTime(COLOR_CYCLE_SPEED, COLOR_CYCLE);
     }
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "minestuck:pointer_wand"
+    "minestuck:pointer_wand",
+    "minestuck:artifucker"
   ]
 }
