@@ -13,31 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-/**
- * Vanilla has nothing reusable for "smash through an obstacle toward a target" - {@code Zombie}'s
- * door-breaking is hardcoded to doors specifically. This uses {@link net.minecraft.world.entity.ai.navigation.PathNavigation#isStuck()}
- * (vanilla's own built-in "hasn't moved meaningfully while actively navigating" detector, not a
- * custom timer) as the trigger, then finds the block directly between the brain and its target and
- * breaks it, taking however long the clone's held item would actually take a player to break it - so
- * a fence or a log goes down in a couple seconds even bare-handed, while something the held tool is
- * genuinely bad against gets skipped instead of being whittled away over an unreasonable chunk of the
- * 30s rage. Also respects the {@code mobGriefing} gamerule.
- *
- * <p>Shares {@code Flag.MOVE}/{@code Flag.LOOK} with {@link RageChaseGoal}, so the two are mutually
- * exclusive by construction - this only ever runs when chasing has already given up (no path, out of
- * range), not as a competing priority. Breaking the block itself is done directly on the level rather
- * than through any player-specific mining method - unlike landing a hit, there's no custom on-block
- * effect this needs to preserve, so there's no reason to route it through {@code RageCloneEntity}.
- */
 public class RageBreakBlockGoal extends Goal {
 
-    /**
-     * A cap on how long a single block is worth committing to, not a fixed break speed - actual break
-     * time is computed per-block by {@link #computeTicksToBreak}, the same formula vanilla uses to
-     * time a player's own mining ({@code BlockBehaviour#getDestroyProgress}). Anything that would take
-     * longer than this (e.g. stone against an unsuitable tool) is treated as not worth attempting,
-     * since the whole rage only lasts 600 ticks to begin with.
-     */
     private static final int MAX_TICKS_TO_BREAK = 100;
 
     private final RagePathBrainEntity mob;
@@ -123,13 +100,6 @@ public class RageBreakBlockGoal extends Goal {
         return null;
     }
 
-    /**
-     * Mirrors {@code BlockBehaviour#getDestroyProgress} (how vanilla times a player's own mining) with
-     * the brain's mainhand item standing in for the player - it wears the clone's own weapon copy too,
-     * see {@link RagePathBrainEntity}: {@code toolSpeed / hardness / divisor} progress per tick, where
-     * the divisor is 30 for a suitable tool and 100 otherwise - then inverted into a tick count.
-     * Returns 0 for an unbreakable block (hardness &lt; 0, e.g. bedrock).
-     */
     private int computeTicksToBreak(BlockState state, BlockPos pos) {
         float hardness = state.getDestroySpeed(this.mob.level(), pos);
         if (hardness < 0.0F)

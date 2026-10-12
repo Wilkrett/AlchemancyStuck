@@ -8,17 +8,6 @@ import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
 
-/**
- * Vanilla's own {@code MeleeAttackGoal} hardcodes a flat 20-tick (1s) cooldown between attacks
- * regardless of what's held, and bundles the chase movement together with landing the actual hit.
- * This keeps only the chase/pathing/look-at half (adapted from vanilla's source, trimmed of the
- * pathfinding-penalty bookkeeping that only matters when many mobs path at once) - landing the hit is
- * {@link RageCloneEntity}'s job now, since only a real {@code Player} can call the real
- * {@code Player#attack} (sweep, crits, custom on-hit weapon effects and all) that this addon's whole
- * FakePlayer rewrite exists to reach. This goal just gets the brain's body next to the target and
- * facing it; {@code RageCloneEntity#tick} checks {@link RagePathBrainEntity#isWithinMeleeAttackRange}
- * itself each tick to decide when to actually swing.
- */
 public class RageChaseGoal extends Goal {
 
     private final RagePathBrainEntity mob;

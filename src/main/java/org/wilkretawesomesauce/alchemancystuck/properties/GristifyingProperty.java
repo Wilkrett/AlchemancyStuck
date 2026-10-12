@@ -14,17 +14,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.Collection;
 
-/**
- * Mirrors Minestuck's own {@code mine_and_grist}/{@code GristLootModifier} pattern (grist-cost lookup
- * + {@link GristEntity#spawnGristEntities}), just applied to a killed entity's drops instead of a
- * mined block's - same {@link #GRIST_YIELD} discount the pickaxe applies, for the same reason (a 1:1
- * trade would make grinding for grist strictly better than actually using the loot).
- *
- * <p>A dropped item with no known grist-cost recipe still gets converted, just to a random grist
- * type instead of a priced amount - {@link GristHelper#getPrimaryGrist}, the same weighted picker
- * Minestuck uses to align underlings, which already excludes types with no underling color set
- * (Zillium included - see {@code GristTypes.ZILLIUM}'s missing {@code .underlingType(...)} call).
- */
 public class GristifyingProperty extends Property {
 
     private static final float GRIST_YIELD = 0.5F;

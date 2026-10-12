@@ -3,5 +3,8 @@
   "values": [
     "minestuck:mwrthwl",
     "minestuck:caledfwlch"
+  ],
+  "remove": [
+    "minecraft:dragon_egg"
   ]
 }

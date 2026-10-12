@@ -12,19 +12,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.wilkretawesomesauce.alchemancystuck.client.SbahjTextTransformer;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
 
-/**
- * Both private {@code drawInternal} overloads (one per {@code String}, one per
- * {@link FormattedCharSequence}) are the two chokepoints every public {@code Font.drawInBatch} overload
- * ultimately funnels through - the {@code Component} overload converts to a
- * {@code FormattedCharSequence} and calls the second one - so together they cover essentially all
- * on-screen text (tooltips, buttons, chat, signs, books, HUD) without needing to also hook every public
- * overload individually.
- *
- * <p>Client-only mixin (see {@code alchemancystuck.mixins.json}'s {@code "client"} array, not
- * {@code "mixins"}) - {@code Font} doesn't exist on a dedicated server, and this addon's other mixins
- * already learned the hard way (see {@code VillagerDiscountMixin}'s history) that Mixin failures on
- * launch are not gentle.
- */
 @Mixin(Font.class)
 public abstract class FontSbahjMixin {
 

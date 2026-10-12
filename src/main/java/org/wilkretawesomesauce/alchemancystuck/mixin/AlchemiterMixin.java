@@ -8,11 +8,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.wilkretawesomesauce.alchemancystuck.alchemy.CardPropertyTransfer;
 
-/**
- * The Alchemiter is the machine that finally converts a carved dowel back into a real, usable item.
- * {@code getOutput()} reduces the dowel down to {@code EncodedItemComponent.getEncodedOrBlank}, which would
- * otherwise silently discard whatever properties the Totem Lathe carried onto the dowel.
- */
 @Mixin(AlchemiterBlockEntity.class)
 public abstract class AlchemiterMixin
 {

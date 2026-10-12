@@ -16,17 +16,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
 
-/**
- * Reuses Minestuck's own {@code AimbotMagicEffect.targetEffect} logic (nearest-visible-combat-target
- * search via {@link TargetingConditions#forCombat()} in an 11-block box around the player's eyes,
- * then {@code lookAt} snapping onto it) rather than the raytrace/damage parts of that class, which are
- * specific to {@code MagicRangedRightClickEffect}'s own right-click weapon and don't apply here.
- *
- * <p>Triggers on both mouse buttons while holding the item (M1 landing a hit via {@link #onAttack},
- * M2 via {@link #onRightClickItem}), and continuously, once per tick, while worn in an armor slot -
- * the latter is deliberately not also true for the mainhand, or it would fire every tick regardless of
- * clicking and make the two click triggers redundant.
- */
 public class AimbotProperty extends Property {
 
     private static final int TARGET_RANGE = 11;

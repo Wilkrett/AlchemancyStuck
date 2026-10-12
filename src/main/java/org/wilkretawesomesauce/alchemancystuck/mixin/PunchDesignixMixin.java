@@ -14,12 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.wilkretawesomesauce.alchemancystuck.alchemy.CardPropertyTransfer;
 
-/**
- * Carries Alchemancy properties from the already-slotted card onto the resulting punched card, since
- * {@link com.mraof.minestuck.item.components.EncodedItemComponent} only ever stores the plain {@code Item} and
- * would otherwise silently discard any infused properties. The output ends up with exactly the slotted card's
- * existing properties - the typed-in captcha code never contributes any of its own, discovered or otherwise.
- */
 @Mixin(PunchDesignixBlockEntity.class)
 public abstract class PunchDesignixMixin
 {
@@ -38,16 +32,6 @@ public abstract class PunchDesignixMixin
 		this.alchemancystuck$previousCard = getCard();
 	}
 
-	/**
-	 * {@code punchCard} only calls {@code setCard}/triggers/effects at all when {@code output} ends up
-	 * non-empty - no matching || recipe for the typed captcha code and the already-slotted card means
-	 * {@code CombinationRecipe.findResult} returns empty and the whole punch is silently dropped, card
-	 * and all. Falling back to the slotted card's own represented item here means a no-Minestuck-recipe
-	 * "combination" still re-punches that same card (sans any Minestuck item transformation) instead of
-	 * doing nothing - {@link #alchemancystuck$applyProperties} then re-applies the slotted card's own
-	 * properties onto it the normal way, since it re-reads {@link #alchemancystuck$previousCard}
-	 * regardless of how the vanilla item was decided.
-	 */
 	@ModifyExpressionValue(method = "punchCard", at = @At(value = "INVOKE", target = "Lcom/mraof/minestuck/api/alchemy/recipe/combination/CombinationRecipe;findResult(Lcom/mraof/minestuck/api/alchemy/recipe/combination/CombinationInput;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/ItemStack;"))
 	private ItemStack alchemancystuck$fallbackToSlottedCard(ItemStack result)
 	{

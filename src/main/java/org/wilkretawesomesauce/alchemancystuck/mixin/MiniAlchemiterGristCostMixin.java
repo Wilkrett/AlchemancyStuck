@@ -11,12 +11,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.wilkretawesomesauce.alchemancystuck.alchemy.AlchemiterCostHelper;
 
-/**
- * Both {@code contentsValid} (the afford-check gating whether crafting starts) and {@code processContents}
- * (the actual deduction) call {@code GristCostRecipe.findCostForItem} independently on the same
- * property-carrying decoded stack (see {@link MiniAlchemiterMixin}), so both need the Cruxite/SBAHJ
- * cost adjustment applied identically, or the machine can stall refusing to start a craft it can actually afford.
- */
 @Mixin(MiniAlchemiterBlockEntity.class)
 public abstract class MiniAlchemiterGristCostMixin
 {
@@ -26,6 +20,7 @@ public abstract class MiniAlchemiterGristCostMixin
 	)
 	private GristSet alchemancystuck$applyCostProperties(ItemStack output, GristType wildcardGrist, boolean allowMissing, Level level, Operation<GristSet> original)
 	{
-		return AlchemiterCostHelper.applyCostProperties(original.call(output, wildcardGrist, allowMissing, level), output, 1);
+		ItemStack card = ((MachineProcessBlockEntityAccessor) (Object) this).alchemancystuck$getItemHandler().getStackInSlot(0);
+		return AlchemiterCostHelper.applyCostProperties(original.call(output, wildcardGrist, allowMissing, level), output, card, 1);
 	}
 }

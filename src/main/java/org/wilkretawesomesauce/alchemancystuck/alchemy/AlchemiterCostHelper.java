@@ -16,11 +16,11 @@ public final class AlchemiterCostHelper {
     private AlchemiterCostHelper() {
     }
 
-    public static GristSet applyCostProperties(GristSet original, ItemStack output, int count) {
+    public static GristSet applyCostProperties(GristSet original, ItemStack output, ItemStack source, int count) {
         if (original == null)
             return null;
 
-        GristSet cost = addPropertyCosts(original, output, count);
+        GristSet cost = addPropertyCosts(original, source, count);
 
         if (InfusedPropertiesHelper.hasProperty(output, AddonProperties.CRUXITE)) {
             MutableGristSet reduced = MutableGristSet.newDefault();
@@ -40,27 +40,16 @@ public final class AlchemiterCostHelper {
         return cost;
     }
 
-    /**
-     * Adds {@link PropertyGristCosts}' per-property surcharge for every property active on
-     * {@code output}, before Cruxite/SBAHJ get a chance to scale or collapse the total - so both
-     * still apply to the property surcharges too, not just the item's own base cost. {@code original}
-     * already reflects {@code count} (the Alchemiter scales the base recipe cost by the requested
-     * amount before this runs), so only the per-property surcharge - priced per single item - needs
-     * scaling here, or it'd stay flat while the base cost rises as the player adjusts the amount.
-     * <p>
-     * Gated by {@link Config.Server#propertyGristCosts()} - Cruxite/SBAHJ are applied separately by
-     * the caller and are unaffected by this setting.
-     */
-    private static GristSet addPropertyCosts(GristSet original, ItemStack output, int count) {
+    private static GristSet addPropertyCosts(GristSet original, ItemStack source, int count) {
         if (!Config.Server.propertyGristCosts())
             return original;
 
         MutableGristSet withPropertyCosts = original.mutableCopy();
-        InfusedPropertiesHelper.forEachProperty(output, holder -> {
+        for (var holder : CardPropertyTransfer.getExistingProperties(source)) {
             GristSet propertyCost = PropertyGristCosts.get(holder);
             if (propertyCost != null)
                 withPropertyCosts.add(propertyCost.mutableCopy().scale(count));
-        });
+        }
         return withPropertyCosts;
     }
 }

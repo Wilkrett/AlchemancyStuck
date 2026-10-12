@@ -41,11 +41,6 @@ public class Alchemancystuck {
         NeoForge.EVENT_BUS.addListener(RageEffect::onEffectExpired);
         NeoForge.EVENT_BUS.addListener(RageEffect::onEffectRemoved);
         NeoForge.EVENT_BUS.addListener(RageEffect::onPlayerDeath);
-        // HIGH, not the default NORMAL - Alchemancy's own PropertyEventHandler#onCriticalHit (the
-        // listener that reads event.isCriticalHit() to fire e.g. Smiting's onCriticalAttack) registers
-        // at NORMAL too, and same-priority listeners across two different mods run in an order neither
-        // mod controls. Forcing the crit has to happen strictly before that read, or Alchemancy's own
-        // crit-triggered property hooks silently never see it.
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGH, RageEffect::onCriticalHit);
     }
 

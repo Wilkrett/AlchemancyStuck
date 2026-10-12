@@ -13,10 +13,6 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-/**
- * Debug command for checking what infused/dormant Alchemancy properties the held item currently has -
- * useful for verifying the Punch Designix/Totem Lathe/Alchemiter property carry-over.
- */
 public final class PropertiesCommand
 {
 	private PropertiesCommand()

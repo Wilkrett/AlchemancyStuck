@@ -15,19 +15,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-/**
- * Purely a "pathfinding brain" for {@link RageCloneEntity} - registered with
- * {@code clientTrackingRange(0)} (see {@code AddonEntities}), so no client ever even learns this
- * exists, and {@link #canBeSeenByAnyone} is hard-overridden false so no other mob's target selector
- * can lock onto it server-side either. It never fights; {@link RageCloneEntity#tick} mirrors this
- * entity's position/rotation onto itself every tick and does the actual attacking there instead.
- *
- * <p>The split exists because neither half of "real combat, real pathfinding" can be gotten from a
- * single entity: {@code Player} (what {@link RageCloneEntity} now is, so that
- * {@code ItemStack#hurtEnemy} - and by extension custom on-hit weapon effects - actually fires) has no
- * {@code PathNavigation}/{@code GoalSelector}, while {@code Mob} (what this is) can never reach that
- * same Player-only combat hook no matter what. This mob does the legs, the clone does the fists.
- */
 public class RagePathBrainEntity extends PathfinderMob {
 
     @Nullable
@@ -56,26 +43,11 @@ public class RagePathBrainEntity extends PathfinderMob {
         this.targetSelector.addGoal(1, new RageTargetGoal(this));
     }
 
-    /**
-     * Default {@code Mob.createNavigation} returns {@code GroundPathNavigation}, whose {@code
-     * hasValidPathType} hardcodes {@code PathType.WATER -> false} - an absolute veto, not just a heavy
-     * malus, so a chase across/through water was previously impossible to path at all (the goal would
-     * just fail to find a path and give up at the shore). {@code AmphibiousPathNavigation} is vanilla's
-     * own navigator for mobs meant to path over both land and water. No {@code FloatGoal} alongside
-     * this - its constant surface-seeking jump impulse would fight a chase that actually needs to dive
-     * after a submerged target, and this entity is already invulnerable, so it was never protecting
-     * against drowning damage in the first place.
-     */
     @Override
     protected PathNavigation createNavigation(Level level) {
         return new AmphibiousPathNavigation(this, level);
     }
 
-    /**
-     * Tells this brain which entities are off-limits as targets - its own puppet body and the
-     * spectating owner, both of which are otherwise perfectly ordinary, alive {@code LivingEntity}s
-     * sitting right next to it and would get picked up by a plain nearest-target search otherwise.
-     */
     public void setPuppet(RageCloneEntity puppet, ServerPlayer owner) {
         this.puppetUUID = puppet.getUUID();
         this.ownerUUID = owner.getUUID();

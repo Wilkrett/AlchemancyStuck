@@ -10,19 +10,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.wilkretawesomesauce.alchemancystuck.alchemy.CardPropertyTransfer;
 
-/**
- * Same treatment as {@link TotemLatheMixin}, but for the miniature Totem Lathe, which has its own
- * independent {@code createResult} implementation.
- */
 @Mixin(MiniTotemLatheBlockEntity.class)
 public abstract class MiniTotemLatheMixin
 {
-	/**
-	 * Same reasoning as {@link TotemLatheMixin#alchemancystuck$fallbackToFirstCard} - falls back to
-	 * slot 0's own represented item when {@code CombinationRecipe.findResult} finds no matching &&
-	 * recipe for the two slotted cards, instead of {@code createResult} discarding the attempt
-	 * entirely.
-	 */
 	@ModifyExpressionValue(method = "createResult", at = @At(value = "INVOKE", target = "Lcom/mraof/minestuck/api/alchemy/recipe/combination/CombinationRecipe;findResult(Lcom/mraof/minestuck/api/alchemy/recipe/combination/CombinationInput;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/ItemStack;"))
 	private ItemStack alchemancystuck$fallbackToFirstCard(ItemStack result)
 	{

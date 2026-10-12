@@ -20,51 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
-/**
- * Same mechanic as Minestuck's own SBAHJ-tier weapons ({@code sord}, {@code nife}, {@code batleacks},
- * {@code lanec}, {@code ow_the_edge} - all built on {@code OnHitEffect.SORD_DROP}): a flat 25% chance
- * per hit to slip out of the attacker's hand and land on the ground as a real, pickup-delayed item
- * entity, plus a chat line. Unlike {@code SORD_DROP} (one fixed message baked into the item's own
- * description id), this picks randomly from a small pool of its own, since it's meant to be infused
- * onto whatever weapon rather than tied to one specific item.
- *
- * <p>Also absorbs the former {@code ArtifactProperty}'s grist-cost behavior (collapsing the
- * alchemizing cost of an infused item into a single Artifact-grist total) - see
- * {@link org.wilkretawesomesauce.alchemancystuck.alchemy.AlchemiterCostHelper}.
- *
- * <p>Worn armor also gets an 80% chance to actually stay equipped, rolled once per equip via
- * {@link #onEquippedTick} rather than every tick - {@code onEquippedTick} alone has no "you just put
- * this on" moment, so a per-stack {@code IDataHolder<Boolean>} flag (persisted via the base mod's own
- * {@code PropertyDataComponent} mechanism, same as {@code HollowProperty}'s stored item) remembers
- * whether this particular equip has already been rolled, and {@link #onInventoryTick} clears it back
- * to unrolled the moment the item isn't worn, so taking it off and putting it back on rolls fresh.
- *
- * <p>Also breaks {@code AntigravProperty} when both are on the same item: instead of
- * {@code Antigrav}'s own "zero gravity, drift wherever" ({@code Attributes.GRAVITY} zeroed when worn,
- * {@code setNoGravity(true)} when dropped or thrown), SBAHJ layers a constant upward push on top -
- * dropped ({@link #onEntityItemTick}) and thrown/shot ({@link #onProjectileTick}) just get a forced
- * upward velocity every tick (nothing to announce it to), while worn *or held*
- * ({@link #onEquippedTick}, unlike Antigrav's own armor-only version) grants the wearer vanilla
- * Levitation instead, refreshed every tick same as {@code GlowingProperty}'s effect-refresh idiom.
- * The "LIFDOFF" line only fires for the player case, gated on {@code !user.hasEffect(LEVITATION)}
- * checked *before* re-applying it that tick - since the effect is refreshed continuously while
- * equipped, that condition is only ever true on the first tick of a given liftoff, not every tick.
- *
- * <p>SBAHJ + {@code EdibleProperty}: {@link #onFinishUsingItem} just piggybacks a chat line onto
- * {@code EdibleProperty}'s own eating logic - {@code ItemStackMixin#finishUsingItem} calls every
- * active property's {@code onFinishUsingItem} independently via {@code forEachProperty} regardless of
- * what any of them return, so this doesn't need to (and shouldn't) touch the actual eating; it returns
- * {@code false} and leaves that entirely to {@code EdibleProperty}.
- *
- * <p>SBAHJ + {@code TreadmilledProperty} ("Conveyed"): {@link #swerve} adds a random left/right
- * impulse on top of whatever horizontal velocity Conveyed's own {@code onEquippedTick} already set that
- * tick, rather than replacing it - which is why {@link #getPriority()} is overridden to
- * {@code Priority.LOWER} (runs after the default-priority {@code TreadmilledProperty}, per
- * {@code Property.Priority}'s "lower value runs first" ordering) instead of leaving it at the default:
- * Conveyed's own hook unconditionally overwrites {@code getDeltaMovement()} with a fresh forward vector
- * every tick, so building on it instead of fighting over ordering means this has to run strictly after.
- */
-
 public class SBAHJProperty extends Property implements IDataHolder<Boolean> {
 
     private static final float DROP_CHANCE = 0.25F;

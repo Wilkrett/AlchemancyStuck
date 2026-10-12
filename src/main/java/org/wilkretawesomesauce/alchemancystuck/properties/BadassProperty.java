@@ -17,11 +17,6 @@ import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
 
 import java.util.List;
 
-/**
- * Nothing here fires from a {@link Property} hook - the base mod has no "an explosion happened
- * nearby" event, so this is driven by {@link #onExplosionDetonate}, a plain NeoForge listener
- * registered on {@code NeoForge.EVENT_BUS} in {@code Alchemancystuck}'s constructor.
- */
 public class BadassProperty extends Property {
 
     private static final int EFFECT_DURATION_TICKS = 200;

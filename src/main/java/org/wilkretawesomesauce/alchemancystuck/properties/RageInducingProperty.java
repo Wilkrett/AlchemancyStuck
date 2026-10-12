@@ -13,25 +13,11 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import org.wilkretawesomesauce.alchemancystuck.effect.RageEffect;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonMobEffects;
 
-/**
- * Rolls a rare chance on attacking with the weapon, or on taking damage while worn in an armor
- * slot, and - if it hits - applies {@link RageEffect} to the wearer. Everything downstream of that
- * (spawning the fighting clone, the spectator/camera swap, the combat buffs, ending the rage, and
- * login/logout edge cases) is owned entirely by the effect itself; see its class doc.
- *
- * <p>On the weapon side, this property also doubles the weapon's durability loss on every hit
- * (regardless of whether the rage roll hits) - an always-on drawback for wielding it, not something
- * tied to an active rage.
- */
 public class RageInducingProperty extends Property {
 
     private static final float TRIGGER_CHANCE = 0.05F;
     private static final int EXTRA_DURABILITY_DAMAGE = 1;
 
-    /**
-     * Shared with {@code RageVignetteRenderer}, so the screen vignette during a rage cycles through
-     * the exact same colors, in sync, as this property's own item tint.
-     */
     public static final float COLOR_CYCLE_SPEED = 0.6F;
     public static final int[] COLOR_CYCLE = {0x8B0000, 0x8d0400, 0x4b1853, 0x631db4};
 

@@ -15,27 +15,6 @@ import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
 
 import java.util.function.Consumer;
 
-/**
- * Unlike {@code DeadProperty}, whose "wipes the item" reputation is really just its own overrides
- * (clears attributes, cancels right-click), Perfectly Generic is meant to genuinely blank out every
- * other property on the item - the way alchemizing with nothing but a Perfectly Generic dowel yields
- * an item with no properties at all. That can't be done from a {@code Property} subclass: nothing in
- * the base mod's own property-suppression logic (see {@code InfusedPropertiesHelper#hasProperty}) is
- * generic - it's a hardcoded identity check against the {@code DEAD} holder, and it only ever
- * suppresses innate properties, not infused ones. So this mixin extends the same choke points
- * ({@code hasProperty} and {@code forEachProperty}) to treat Perfectly Generic as exclusive of
- * infused, innate, and dormant properties alike.
- *
- * <p>{@link #hasPerfectlyGeneric} deliberately never calls the (mixed) {@code hasProperty} methods -
- * an earlier version routed through them and stack-overflowed almost immediately. {@code hasProperty}'s
- * own body calls itself for {@code AlchemancyProperties.DEAD} as part of its innate-property check;
- * since {@code DEAD != PERFECTLY_GENERIC}, that call re-entered this mixin's suppression check, which
- * called back into {@code hasProperty(stack, PERFECTLY_GENERIC)}, which ran the original body again,
- * which checked {@code DEAD} again - an unbounded PERFECTLY_GENERIC&harr;DEAD cycle, not the one-level
- * recursion assumed at the time. Building the check from the non-recursive
- * {@code hasInfusedProperty}/{@code hasInnateProperty}/{@code hasDormantProperty} primitives instead
- * (none of which call back into {@code hasProperty}) avoids re-entering this mixin at all.
- */
 @Mixin(InfusedPropertiesHelper.class)
 public abstract class InfusedPropertiesHelperMixin {
 

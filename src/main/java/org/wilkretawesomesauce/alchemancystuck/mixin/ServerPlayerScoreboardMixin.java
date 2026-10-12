@@ -8,13 +8,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageCloneEntity;
 
-/**
- * {@code ServerPlayer#doTick} (needed for real per-tick Player/LivingEntity behavior - see
- * {@code RageCloneEntity#tick}'s own doc comment) calls this every tick for health/food/air/armor/xp/
- * level, writing a score into whatever scoreboard objectives track those criteria. That's how a rage
- * clone ends up showing up in a leaderboard-style sidebar/tab-list objective mid-rage - it's a real,
- * tracked score holder as far as the scoreboard is concerned, same as any other player.
- */
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerScoreboardMixin {
 

@@ -15,23 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import org.wilkretawesomesauce.alchemancystuck.registry.AddonProperties;
 
-/**
- * Makes an infused, hand-thrown item ({@code ThrowableProperty#throwItem(Level, LivingEntity, ItemStack)},
- * the {@code onRightClickItem} path) fly exactly like Minestuck's own {@code sbahjarang}
- * ({@code ConsumableProjectileWeaponItem}'s {@code velocity}/{@code accuracy} of {@code 0.5F}/{@code 20.0F})
- * whenever SBAHJ is also on the item, overriding Throwable's own velocity/inaccuracy (and Sharpshooting's
- * 1.5x boost to it) entirely rather than combining with them.
- *
- * <p>The SBAHJ check has to happen at {@code HEAD}, before anything else in the method runs, and be
- * carried to the {@code shootFromRotation} call via a {@code @Share}d local rather than re-checked
- * there directly: for the common non-{@code ProjectileItem} branch, the method calls
- * {@code stack.split(1)} on the held stack to build the thrown {@code InfusedItemProjectile} *before*
- * {@code shootFromRotation} is invoked, and for a normal count-1 infused item that split empties the
- * original stack in place. {@code InfusedPropertiesHelper.hasProperty} short-circuits to {@code false}
- * on an empty stack, so checking the same local right at the {@code shootFromRotation} call site (which
- * is what a plain {@code @Local} capture there would see) always missed - the property was still on the
- * stack, just no longer on a stack {@code hasProperty} would even look at.
- */
 @Mixin(ThrowableProperty.class)
 public abstract class ThrowablePropertyMixin {
 

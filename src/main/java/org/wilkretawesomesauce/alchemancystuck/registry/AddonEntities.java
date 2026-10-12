@@ -14,11 +14,6 @@ public class AddonEntities {
 
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, Alchemancystuck.MODID);
 
-    /**
-     * {@code clientTrackingRange(0)} means the server never sends a spawn packet for this to any
-     * client, ever - it needs no renderer, since no client will ever be told it exists. See
-     * {@link RagePathBrainEntity}'s own doc comment for why it exists at all.
-     */
     public static final DeferredHolder<EntityType<?>, EntityType<RagePathBrainEntity>> RAGE_PATH_BRAIN = ENTITIES.register("rage_path_brain",
             () -> EntityType.Builder.of(RagePathBrainEntity::new, MobCategory.MISC)
                     .sized(0.6F, 1.95F)

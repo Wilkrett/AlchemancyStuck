@@ -16,20 +16,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 
-/**
- * Per-property grist surcharge applied by {@link AlchemiterCostHelper} on top of an item's normal
- * Minestuck grist cost for every Alchemancy property active on it, covering every property
- * registered by either the base mod ({@link AlchemancyProperties}) or this addon
- * ({@link AddonProperties}).
- * <p>
- * The grist type(s) per property are hand-picked to loosely match the property's name/flavor - most
- * properties cost a single type, but ones that are either mechanically significant (Awakened,
- * Vampiric, Exploding, ...) or whose flavor naturally spans two materials (Gilded, Smiting, ...)
- * cost a blend of two or three. Amounts are a flat-ish surcharge per type with a small,
- * per-property-stable amount of variance (seeded off the property's own registry id, so it doesn't
- * reshuffle every launch) rather than a hand-tuned balance pass. {@link GristTypes#ZILLIUM} is
- * deliberately never used here, since it's reserved as an endgame-only grist type.
- */
 public final class PropertyGristCosts
 {
 	private PropertyGristCosts()
@@ -303,10 +289,10 @@ public final class PropertyGristCosts
 		cost(AlchemancyProperties.ROTATING, GristTypes.COBALT);
 		cost(AlchemancyProperties.BATTERY_POWERED, GristTypes.COBALT, GristTypes.URANIUM);
 		cost(AlchemancyProperties.LIVING_BATTERY, GristTypes.COBALT, GristTypes.RUBY);
-		cost(AlchemancyProperties.BADA_QUIP, GristTypes.GOLD);
+		cost(AlchemancyProperties.BADA_QUIP, GristTypes.COBALT);
 
 		//Innate
-		cost(AlchemancyProperties.INFUSION_CODEX, GristTypes.ARTIFACT, GristTypes.AMETHYST);
+		cost(AlchemancyProperties.INFUSION_CODEX, GristTypes.RUBY);
 		cost(AlchemancyProperties.AUXILIARY, GristTypes.BUILD);
 		cost(AlchemancyProperties.ETERNAL_GLOW, GristTypes.DIAMOND);
 		cost(AlchemancyProperties.PHASE_STEP, GristTypes.MARBLE);
@@ -332,11 +318,11 @@ public final class PropertyGristCosts
 		cost(AddonProperties.CAPTCHALOGUING, GristTypes.AMBER);
 		cost(AddonProperties.MAGICAL, GristTypes.AMETHYST);
 		cost(AddonProperties.RAGE_INDUCING, GristTypes.RUBY, GristTypes.SULFUR);
-		cost(AddonProperties.CRUXITE, GristTypes.GOLD, GristTypes.ARTIFACT);
+		//cost(AddonProperties.CRUXITE, GristTypes.BUILD);
 		cost(AddonProperties.PERFECTLY_GENERIC, GristTypes.BUILD);
 		cost(AddonProperties.BADASS, GristTypes.DIAMOND);
 		cost(AddonProperties.GRISTIFYING, GristTypes.BUILD);
-		cost(AddonProperties.SBAHJ, GristTypes.ARTIFACT, GristTypes.RUBY);
+		//cost(AddonProperties.SBAHJ, GristTypes.ARTIFACT);
 		cost(AddonProperties.AIMBOT, GristTypes.COBALT);
 		cost(AddonProperties.DISCOUNT, GristTypes.GOLD);
 	}

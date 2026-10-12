@@ -15,20 +15,6 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.wilkretawesomesauce.alchemancystuck.Alchemancystuck;
 import org.wilkretawesomesauce.alchemancystuck.properties.RageInducingProperty;
 
-/**
- * Reuses vanilla's own night-vignette trick ({@code Gui#renderVignette}) rather than inventing a new
- * one: {@code textures/misc/vignette.png} is a grayscale gradient (black at the center, light gray at
- * the edges) blended with {@code blendFuncSeparate(ZERO, ONE_MINUS_SRC_COLOR, ONE, ZERO)}, so
- * {@code outColor = dstColor * (1 - texel * tint)}. A black center means the center channel is
- * multiplied by {@code (1 - 0)} - always untouched - while the lighter edges get scaled down by
- * however much of that channel the tint asks to crush.
- *
- * <p>That means the tint is "how much to remove," not "what color to add" - to make the edges read as
- * a given color the tint fed in has to be {@code 1 - color}, the same inversion vanilla's own
- * world-border-warning vignette uses (it sets red to {@code 0} to *keep* red, not remove it, letting
- * blue/green get crushed instead so the edges read red). {@link RageInducingProperty#COLOR_CYCLE} is
- * reused as-is here (inverted below) so the vignette cycles in step with the item's own tint.
- */
 @EventBusSubscriber(modid = Alchemancystuck.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class RageVignetteRenderer {
 

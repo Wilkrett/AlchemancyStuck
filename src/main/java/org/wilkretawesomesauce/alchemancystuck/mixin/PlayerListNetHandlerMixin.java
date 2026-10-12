@@ -15,13 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageCloneEntity;
 import org.wilkretawesomesauce.alchemancystuck.entity.RageFakePlayerNetHandler;
 
-/**
- * {@code PlayerList#placeNewPlayer} unconditionally does {@code new ServerGamePacketListenerImpl(...)}
- * for whatever {@code ServerPlayer} it's given - there's no factory hook or subclass-aware branch to
- * override, so the only way to have it construct {@link RageFakePlayerNetHandler} instead for our own
- * fake players is to wrap that exact constructor call. Real players are untouched
- * ({@code original.call(...)}).
- */
 @Mixin(PlayerList.class)
 public abstract class PlayerListNetHandlerMixin {
 
@@ -33,10 +26,6 @@ public abstract class PlayerListNetHandlerMixin {
         return original.call(server, connection, player, cookie);
     }
 
-    /**
-     * Suppresses the "X joined the game" broadcast specifically for rage clones - they aren't a real
-     * player connecting, and the message is just confusing chat noise every time a rage triggers.
-     */
     @WrapOperation(method = "placeNewPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     private void alchemancystuck$suppressCloneJoinMessage(PlayerList instance, Component message, boolean bypassHiddenChat, Operation<Void> original, @Local(argsOnly = true) ServerPlayer player) {
         if (!(player instanceof RageCloneEntity))
