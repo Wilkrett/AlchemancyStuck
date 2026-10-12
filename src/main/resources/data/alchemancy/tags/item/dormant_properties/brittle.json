@@ -62,6 +62,7 @@
     "minecraft:pink_stained_glass",
     "minecraft:yellow_stained_glass_pane",
     "minecraft:blue_stained_glass_pane",
-    "minecraft:black_stained_glass"
+    "minecraft:black_stained_glass",
+    "minestuck:fragile_stone"
   ]
 }

@@ -5,6 +5,8 @@
     "minestuck:unstable_tnt",
     "minecraft:tnt",
     "minestuck:primed_tnt",
-    "minestuck:instant_tnt"
+    "minestuck:instant_tnt",
+    "minestuck:stone_explosive_button",
+    "minestuck:wooden_explosive_button"
   ]
 }

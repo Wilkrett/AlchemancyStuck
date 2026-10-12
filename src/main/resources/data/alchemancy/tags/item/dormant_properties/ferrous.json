@@ -43,6 +43,14 @@
     "minestuck:end_stone_iron_ore",
     "minestuck:red_sandstone_iron_ore",
     "minestuck:molten_amber_bucket",
-    "minestuck:carving_tool"
+    "minestuck:carving_tool",
+    "minestuck:oil_bucket",
+    "minestuck:blood_bucket",
+    "minestuck:brain_juice_bucket",
+    "minestuck:water_colors_bucket",
+    "minestuck:ender_bucket",
+    "minestuck:light_water_bucket",
+    "minestuck:obsidian_bucket",
+    "minestuck:caulk_bucket"
   ]
 }
