@@ -9,6 +9,7 @@
     "MiniTotemLatheMixin",
     "AlchemiterMixin",
     "AlchemiterGristCostMixin",
+    "GristWidgetGristCostMixin",
     "MiniAlchemiterMixin",
     "MiniAlchemiterGristCostMixin",
     "MachineProcessBlockEntityAccessor",
