@@ -38,7 +38,7 @@
   "property.alchemancystuck.gristifying": "Gristifying",
 
   "infusion_codex.alchemancystuck:gristifying.flavor": "waste not, want not.",
-  "infusion_codex.alchemancystuck:gristifying.on_kill": "While held, enemies drop {grist Grist} (at half their loot's value) instead of their normal loot.",
+  "infusion_codex.alchemancystuck:gristifying.on_kill": "While held, enemies drop {grist Grist} (at double their loot's value) instead of their normal loot.",
 
   "property.alchemancystuck.sbahj": "SBAHJ",
 
@@ -67,7 +67,7 @@
 
   "property.alchemancystuck.aimbot": "Aimbot",
 
-  "infusion_codex.alchemancystuck:aimbot.flavor": "rekt.",
+  "infusion_codex.alchemancystuck:aimbot.flavor": "360 noscope",
   "infusion_codex.alchemancystuck:aimbot.on_attack": "Look at the nearest entity within 11 blocks.",
   "infusion_codex.alchemancystuck:aimbot.when_used": "Look at the nearest entity within 11 blocks.",
   "infusion_codex.alchemancystuck:aimbot.while_worn": "Look at the nearest entity within 11 blocks.",

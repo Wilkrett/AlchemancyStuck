@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class GristifyingProperty extends Property {
 
-    private static final float GRIST_YIELD = 0.5F;
+    private static final float GRIST_YIELD = 2F;
     private static final int UNPRICED_GRIST_PER_ITEM = 2;
 
     @Override

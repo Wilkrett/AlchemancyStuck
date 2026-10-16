@@ -29,9 +29,7 @@ public class RageMusicPlayer {
             LOGGER.info("alchemancystuck debug [RageMusicPlayer]: possessing changed to {}", possessing);
 
         if (possessing && !wasPossessing) {
-            SoundEvent track = client.player.getRandom().nextBoolean()
-                    ? AddonSoundEvents.RAGE_BAD_TO_THE_BONE.get()
-                    : AddonSoundEvents.RAGE_THE_CARNIVAL.get();
+            SoundEvent track = AddonSoundEvents.RAGE_THE_CARNIVAL.get();
             currentTrack = SimpleSoundInstance.forMusic(track);
             LOGGER.info("alchemancystuck debug [RageMusicPlayer]: playing track={}, instance location={}",
                     track.getLocation(), currentTrack.getLocation());

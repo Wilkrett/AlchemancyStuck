@@ -47,13 +47,13 @@ public final class CardPropertyTransfer
 		if(hasSource1 && hasSource2)
 		{
 			int half = InfusedPropertiesHelper.getInfusionSlots(target) / 2;
-			toApply.addAll(capTo(collectExistingProperties(target, source1), half));
-			toApply.addAll(capTo(collectExistingProperties(target, source2), half));
+			toApply.addAll(capTo(collectFromSource(target, source1), half));
+			toApply.addAll(capTo(collectFromSource(target, source2), half));
 		}
 		else
 		{
-			toApply.addAll(collectExistingProperties(target, source1));
-			toApply.addAll(collectExistingProperties(target, source2));
+			toApply.addAll(collectFromSource(target, source1));
+			toApply.addAll(collectFromSource(target, source2));
 		}
 
 		return applyProperties(target, asContainer, toApply);
